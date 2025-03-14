@@ -1,0 +1,32 @@
+.loginform_container {
+  width: 30%;
+  .loginform {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    .forminput {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      input {
+        padding: 5px;
+        border-radius: 10px;
+      }
+      input:focus {
+        outline: none;
+      }
+      span {
+        color: red;
+        font-weight: bold;
+      }
+    }
+    button {
+      width: 30%;
+      padding: 5px;
+      border-radius: 10px;
+    }
+  }
+}
