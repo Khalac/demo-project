@@ -44,6 +44,7 @@ const LogInForm = () => {
           <label>Password</label>
           <input type="password" {...register("password")} />
           {errorPass && <span>{errorPass}</span>}
+          {errors && <span>{errors.password?.message}</span>}
         </div>
         <button type="submit">Log In</button>
       </form>

@@ -1,11 +1,7 @@
-type UserData = {
+export type UserData = {
+  name: string;
   email: string;
   password: string;
 };
 
-export const User: UserData[] = [
-  {
-    email: "abc@gmail.com",
-    password: "abc123",
-  },
-];
+export const User: UserData[] = [];
