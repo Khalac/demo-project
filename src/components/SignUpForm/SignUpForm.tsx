@@ -16,15 +16,7 @@ const SignUpForm = () => {
     resolver: zodResolver(SignUpSchema),
   });
 
-  const onSubmit: SubmitHandler<SignUpSchema> = (data) => {
-    const newUser: UserData = {
-      name: data.name,
-      email: data.email,
-      password: data.password,
-    };
-    User.push(newUser);
-    console.log(User);
-  };
+  const onSubmit: SubmitHandler<SignUpSchema> = (data) => {};
   return (
     <div className="signupform_container">
       <form onSubmit={handleSubmit(onSubmit)} className="signupform">

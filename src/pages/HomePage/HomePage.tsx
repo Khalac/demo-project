@@ -1,7 +1,14 @@
-import React from "react";
+import Header from "@/components/Header/Header";
+import "./HomePage.scss";
+import SearchInput from "@/components/SearchInput/SearchInput";
 
 const HomePage = () => {
-  return <div>home</div>;
+  return (
+    <div className="homepage">
+      <Header />
+      <SearchInput />
+    </div>
+  );
 };
 
 export default HomePage;
