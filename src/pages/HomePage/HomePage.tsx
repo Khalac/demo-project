@@ -1,6 +1,6 @@
 import Header from "@/components/Header/Header";
 import "./HomePage.scss";
-import SearchInput from "@/components/SearchInput/SearchInput";
+import SearchInput from "@/components/homepage/SearchInput/SearchInput";
 
 const HomePage = () => {
   return (

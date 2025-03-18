@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useFetch } from "@/hooks/useFetch";
+import SearchResult from "../../SearchResult/SearchResult";
+import "./SearchInput.scss";
 
 type SearchInput = {
   SearchStr: string;
@@ -12,19 +13,16 @@ const SearchInput = () => {
 
   const [input, setInput] = useState<SearchInput>({
     SearchStr: "",
-    SearchType: "cards",
+    SearchType: "",
   });
-
-  const { loading, error, data } = useFetch({ ...input });
-
   const onSubmit: SubmitHandler<SearchInput> = (d) => {
     setInput(d);
   };
 
   return (
     <div className="searchinput">
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <select {...register("SearchType")}>
+      <form onSubmit={handleSubmit(onSubmit)} className="search_form">
+        <select {...register("SearchType")} className="type_select">
           <option value="series">Series</option>
           <option value="sets">Sets</option>
           <option value="cards">Cards</option>
@@ -32,16 +30,7 @@ const SearchInput = () => {
         <input type="text" {...register("SearchStr")} />
         <button type="submit">Search</button>
       </form>
-
-      {input.SearchStr ? (
-        <>
-          {loading && <p>Loading...</p>}
-          {error && <p>Error: {error.message}</p>}
-          {data && <pre>{JSON.stringify(data, null, 2)}</pre>}
-        </>
-      ) : (
-        <></>
-      )}
+      {input.SearchStr && <SearchResult {...input} />}
     </div>
   );
 };
