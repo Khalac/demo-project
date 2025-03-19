@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import useDebounce from "@/hooks/useDebounce";
 import { useFetch } from "@/hooks/useFetch";
 import Pagination from "@/components/ui/Pagination/Pagination";
