@@ -5,7 +5,7 @@ export const useFetch = ({
   SearchStr,
 }: {
   SearchType: string;
-  SearchStr: string;
+  SearchStr?: string;
 }) => {
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState(null);
@@ -18,7 +18,7 @@ export const useFetch = ({
       ? "SerieFilters"
       : "SetFilters";
   const search = `
-    query Query ($filters: ${filter}) {
+    query Search ($filters: ${filter}) {
       ${SearchType} (filters: $filters) {
         name
         ${field}
@@ -26,12 +26,20 @@ export const useFetch = ({
       }
     }
   `;
+  const query = `
+  query Query {
+   ${SearchType} {
+     ${field}
+    id
+    name
+  }
+}`;
   useEffect(() => {
     setLoading(true);
     axios
       .post(import.meta.env.VITE_API_KEY, {
-        query: search,
-        variables: { filters: { name: SearchStr } },
+        query: SearchStr ? search : query,
+        variables: SearchStr ? { filters: { name: SearchStr } } : {},
       })
       .then((d) =>
         SearchType === "cards"
@@ -42,6 +50,6 @@ export const useFetch = ({
       )
       .catch((err) => setErr(err.message))
       .finally(() => setLoading(false));
-  }, [SearchStr]);
+  }, [SearchStr, SearchType]);
   return { data, loading, err };
 };

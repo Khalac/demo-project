@@ -1,6 +1,8 @@
-import { useState, useEffect } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
-import SearchResult from "../../SearchResult/SearchResult";
+import { useState, useRef, useEffect } from "react";
+import useDebounce from "@/hooks/useDebounce";
+import { useFetch } from "@/hooks/useFetch";
+import Pagination from "@/components/ui/Pagination/Pagination";
+
 import "./SearchInput.scss";
 
 type SearchInput = {
@@ -9,27 +11,26 @@ type SearchInput = {
 };
 
 const SearchInput = () => {
-  const { register, handleSubmit, reset, formState } = useForm<SearchInput>();
+  const [style, setStyle] = useState("series");
+  const [str, setStr] = useState("");
 
-  const [input, setInput] = useState<SearchInput>({
-    SearchStr: "pika",
-    SearchType: "cards",
+  const SearchStr = useDebounce(str, 1000, style);
+  const [page, setPage] = useState(1);
+  const { data, loading, err } = useFetch({
+    SearchType: "series",
   });
-  const onSubmit: SubmitHandler<SearchInput> = (data) => {
-    setInput(data);
-  };
-  useEffect(() => {
-    if (formState.isSubmitSuccessful) {
-      reset({ SearchStr: "" });
-    }
-  }, [formState, input, reset]);
+
+  const itemPerPage = 6;
 
   return (
     <div className="searchinput">
-      <form onSubmit={handleSubmit(onSubmit)} className="search_form">
+      <form className="search_form">
         <div>
           <label>Type: </label>
-          <select {...register("SearchType")} className="type_select">
+          <select
+            className="type_select"
+            onChange={(e) => setStyle(e.target.value)}
+          >
             <option value="series">Series</option>
             <option value="sets">Sets</option>
             <option value="cards">Cards</option>
@@ -37,11 +38,49 @@ const SearchInput = () => {
         </div>
         <div>
           <label>Name: </label>
-          <input type="text" {...register("SearchStr")} />
+          <input type="text" onChange={(e) => setStr(e.target.value)} />
         </div>
-        <button type="submit">Search</button>
       </form>
-      {input.SearchStr && <SearchResult {...input} />}
+      <div className="search_result">
+        {loading && <div>Loading...</div>}
+        {!err && !loading && data.length === 0 && <div>No data found</div>}
+        {SearchStr === str ? (
+          <ul>
+            {!loading &&
+              data &&
+              data
+                .slice((page - 1) * itemPerPage, page * itemPerPage)
+                .map((d) => {
+                  return (
+                    <li key={d.id} className="search_data">
+                      <img
+                        src={
+                          style === "cards"
+                            ? `${d.image}/high.webp`
+                            : `${d.logo}.webp`
+                        }
+                        alt="image"
+                      />
+                      <div>{d.name}</div>
+                    </li>
+                  );
+                })}
+          </ul>
+        ) : (
+          <></>
+        )}
+
+        {!loading && SearchStr === str && (
+          <Pagination
+            data={data}
+            itemPerPage={itemPerPage}
+            page={page}
+            setPage={setPage}
+          />
+        )}
+
+        {err && <div>{err}</div>}
+      </div>
     </div>
   );
 };
