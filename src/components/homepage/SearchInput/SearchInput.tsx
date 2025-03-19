@@ -9,25 +9,32 @@ type SearchInput = {
 };
 
 const SearchInput = () => {
-  const { register, handleSubmit } = useForm<SearchInput>();
+  const { register, handleSubmit, reset } = useForm<SearchInput>();
 
   const [input, setInput] = useState<SearchInput>({
     SearchStr: "",
     SearchType: "",
   });
   const onSubmit: SubmitHandler<SearchInput> = (d) => {
+    reset();
     setInput(d);
   };
 
   return (
     <div className="searchinput">
       <form onSubmit={handleSubmit(onSubmit)} className="search_form">
-        <select {...register("SearchType")} className="type_select">
-          <option value="series">Series</option>
-          <option value="sets">Sets</option>
-          <option value="cards">Cards</option>
-        </select>
-        <input type="text" {...register("SearchStr")} />
+        <div>
+          <label>Type: </label>
+          <select {...register("SearchType")} className="type_select">
+            <option value="series">Series</option>
+            <option value="sets">Sets</option>
+            <option value="cards">Cards</option>
+          </select>
+        </div>
+        <div>
+          <label>Name: </label>
+          <input type="text" {...register("SearchStr")} />
+        </div>
         <button type="submit">Search</button>
       </form>
       {input.SearchStr && <SearchResult {...input} />}

@@ -1,31 +1,32 @@
-import { useFetch } from '@/hooks/useFetch'
-import './SearchResult.scss'
-import { useState } from 'react'
-import Pagination from '../ui/Pagination/Pagination'
+import { useFetch } from "@/hooks/useFetch";
+import "./SearchResult.scss";
+import { useState } from "react";
+import Pagination from "../ui/Pagination/Pagination";
 const SearchResult = ({
   SearchType,
   SearchStr,
 }: {
-  SearchType: string
-  SearchStr: string
+  SearchType: string;
+  SearchStr: string;
 }) => {
-  const [page, setPage] = useState(1)
+  const [page, setPage] = useState(1);
   const { data, loading, err } = useFetch({
     SearchType,
     SearchStr,
-  })
-  const itemPerPage = 6
+  });
+  const itemPerPage = 6;
   return (
-    <div>
+    <div className="search_result">
       {loading && <div>Loading...</div>}
       <ul>
-        {data &&
+        {!loading &&
+          data &&
           data.slice((page - 1) * itemPerPage, page * itemPerPage).map((d) => {
             return (
               <li key={d.id} className="search_data">
                 <img
                   src={
-                    SearchType === 'cards'
+                    SearchType === "cards"
                       ? `${d.image}/high.webp`
                       : `${d.logo}.webp`
                   }
@@ -33,9 +34,10 @@ const SearchResult = ({
                 />
                 <div>{d.name}</div>
               </li>
-            )
+            );
           })}
       </ul>
+
       {!loading && (
         <Pagination
           data={data}
@@ -44,9 +46,10 @@ const SearchResult = ({
           setPage={setPage}
         />
       )}
+
       {err && <div>{err}</div>}
     </div>
-  )
-}
+  );
+};
 
-export default SearchResult
+export default SearchResult;

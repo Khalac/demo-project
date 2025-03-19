@@ -14,7 +14,7 @@ const Pagination = ({
   const [pages, setPages] = useState<number[]>([]);
   useEffect(() => {
     let numberPages = Math.ceil(data.length / itemPerPage);
-
+    setPage(1);
     if (numberPages >= 1 && numberPages <= 10)
       setPages(Array.from({ length: numberPages }, (_, i) => (i = i + 1)));
     else {
@@ -69,12 +69,21 @@ const Pagination = ({
     setPage(page + 1);
   };
   return (
-    <div style={{ display: "flex", gap: "10px" }} className="pagination">
-      {page > 1 && <button onClick={handlePagePrev}>{"<"}</button>}
-      <div style={{ display: "flex", gap: "20px" }}>
+    <div className="pagination">
+      <button
+        className={
+          page > 1 ? "pagination_button" : "pagination_button not_view"
+        }
+        onClick={handlePagePrev}
+      >
+        {"<"}
+      </button>
+
+      <div className="pagination_pages">
         {pages.map((p, index) => {
           return (
             <div
+              className="pagination_page"
               key={index}
               style={
                 page === p
@@ -88,9 +97,17 @@ const Pagination = ({
           );
         })}
       </div>
-      {page < Math.floor(data.length / itemPerPage) + 1 && (
-        <button onClick={handlePageNext}>{">"}</button>
-      )}
+
+      <button
+        onClick={handlePageNext}
+        className={
+          page < Math.ceil(data.length / itemPerPage)
+            ? "pagination_button"
+            : "pagination_button not_view"
+        }
+      >
+        {">"}
+      </button>
     </div>
   );
 };
