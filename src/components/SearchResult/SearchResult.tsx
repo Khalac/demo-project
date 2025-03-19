@@ -15,9 +15,11 @@ const SearchResult = ({
     SearchStr,
   });
   const itemPerPage = 6;
+  console.log(data);
   return (
     <div className="search_result">
       {loading && <div>Loading...</div>}
+      {!err && !loading && data.length == 0 && <div>No data found</div>}
       <ul>
         {!loading &&
           data &&
