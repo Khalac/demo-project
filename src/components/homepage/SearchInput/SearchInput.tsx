@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import SearchResult from "../../SearchResult/SearchResult";
 import "./SearchInput.scss";
@@ -9,16 +9,20 @@ type SearchInput = {
 };
 
 const SearchInput = () => {
-  const { register, handleSubmit, reset } = useForm<SearchInput>();
+  const { register, handleSubmit, reset, formState } = useForm<SearchInput>();
 
   const [input, setInput] = useState<SearchInput>({
-    SearchStr: "",
-    SearchType: "",
+    SearchStr: "pika",
+    SearchType: "cards",
   });
-  const onSubmit: SubmitHandler<SearchInput> = (d) => {
-    reset();
-    setInput(d);
+  const onSubmit: SubmitHandler<SearchInput> = (data) => {
+    setInput(data);
   };
+  useEffect(() => {
+    if (formState.isSubmitSuccessful) {
+      reset({ SearchStr: "" });
+    }
+  }, [formState, input, reset]);
 
   return (
     <div className="searchinput">

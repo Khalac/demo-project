@@ -17,8 +17,10 @@ const Pagination = ({
     setPage(1);
     if (numberPages >= 1 && numberPages <= 10)
       setPages(Array.from({ length: numberPages }, (_, i) => (i = i + 1)));
-    else {
+    else if (numberPages > 10) {
       setPages(Array.from({ length: 10 }, (_, i) => (i = i + 1)));
+    } else {
+      setPages([]);
     }
   }, [data, itemPerPage]);
 
