@@ -8,20 +8,20 @@
   .pagination_pages {
     display: flex;
     gap: 10px;
-    .pagination_page {
+    .pagination_pages_page {
+      cursor: pointer;
       color: black;
       display: flex;
       justify-content: center;
       align-items: center;
       width: 30px;
-
       border-radius: 10px;
     }
-    .page_active {
+    .on_page {
       background-color: #4dad5b;
     }
   }
-  .not_view {
+  .pagination_button--not_view {
     visibility: hidden;
   }
 }

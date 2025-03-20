@@ -11,8 +11,8 @@ import { useNavigate } from "react-router-dom";
 type LoginSchema = z.infer<typeof LoginSchema>;
 
 const LogInForm = () => {
-  const nav = useNavigate();
-  const [errorPass, setErrorPass] = useState("");
+  const navigate = useNavigate();
+  const [errorPassword, setErrorPassword] = useState("");
   const { changeLogin } = useContext(IsLoginedContext);
   const {
     register,
@@ -23,12 +23,12 @@ const LogInForm = () => {
   });
   const onSubmit: SubmitHandler<LoginSchema> = (data) => {
     const user = User.find((user) => user.email === data.email);
-    if (!user) setErrorPass("User not found");
+    if (!user) setErrorPassword("User not found");
     else {
       if (user?.password !== data.password)
-        setErrorPass("Password is incorrect");
+        setErrorPassword("Password is incorrect");
       else {
-        changeLogin(), nav("/");
+        changeLogin(), navigate("/");
       }
     }
   };
@@ -46,14 +46,14 @@ const LogInForm = () => {
             {...register("password")}
             placeholder="Password"
           />
-          {errorPass && <span>{errorPass}</span>}
+          {errorPassword && <span>{errorPassword}</span>}
           {errors && <span>{errors.password?.message}</span>}
         </div>
         <button type="submit">Log In</button>
       </form>
       <div className="loginform_createaccount">
         <div>Don't have an account?</div>
-        <button onClick={() => nav("/signup")}>Create an Account</button>
+        <button onClick={() => navigate("/signup")}>Create an Account</button>
       </div>
     </div>
   );

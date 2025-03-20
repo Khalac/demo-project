@@ -1,52 +1,59 @@
 import { useFetch } from "@/hooks/useFetch";
 import { useState } from "react";
 import Pagination from "../../ui/Pagination/Pagination";
+import SearchResult from "@/components/ui/SearchResult/SearchResult";
+import useFilter from "@/hooks/useFilter";
 
 import "./AllSeries.scss";
 import useDebounce from "@/hooks/useDebounce";
 
 const AllSeries = () => {
   const [input, setInput] = useState("");
-
-  const SearchStr = useDebounce(input, 1000);
+  const [select, setSelect] = useState("no_filter");
+  const keyword = useDebounce(input, 1000);
   const { data, loading, err } = useFetch(
-    SearchStr
-      ? { SearchStr: SearchStr, SearchType: "series" }
-      : { SearchType: "series" }
+    keyword ? { keyword: keyword, type: "series" } : { type: "series" }
   );
   const [page, setPage] = useState(1);
 
-  const itemPerPage = 4;
+  const ITEMPERPAGE = 5;
+  const dataFilter = useFilter(select, data);
 
   return (
-    <div className="all_series">
-      <div className="all_series_search">
-        <label>Input name of Serie</label>
-        <input type="text" onChange={(e) => setInput(e.target.value)} />
+    <div className="series">
+      <div className="series_search">
+        <div>
+          <label>Name of Serie: </label>
+          <input type="text" onChange={(e) => setInput(e.target.value)} />
+        </div>
+        <div>
+          {" "}
+          <label>Filter: </label>
+          <select
+            className="series_search_select"
+            onChange={(e) => setSelect(e.target.value)}
+          >
+            <option value="no_filter">No filter</option>
+            <option value="name_desc">From A to Z</option>
+            <option value="name_asc">From Z to A</option>
+          </select>
+        </div>
       </div>
-      <div className="all_series_search_result">
-        {loading && <div>Loading...</div>}
-        {!err && !loading && data.length == 0 && <div>No data found</div>}
-        <ul>
-          {!loading &&
-            data &&
-            data
-              .slice((page - 1) * itemPerPage, page * itemPerPage)
-              .map((d) => {
-                return (
-                  <li key={d.id} className="search_data">
-                    <img src={`${d.logo}.webp`} alt="image" />
-                    <div>{d.name}</div>
-                  </li>
-                );
-              })}
-        </ul>
-      </div>
-
+      <SearchResult
+        data={data}
+        loading={loading}
+        err={err}
+        type={"series"}
+        keyword={keyword}
+        input={input}
+        page={page}
+        itemPerPage={ITEMPERPAGE}
+        dataFilter={dataFilter}
+      />
       {!loading && (
         <Pagination
           data={data}
-          itemPerPage={itemPerPage}
+          ITEMPERPAGE={ITEMPERPAGE}
           page={page}
           setPage={setPage}
         />

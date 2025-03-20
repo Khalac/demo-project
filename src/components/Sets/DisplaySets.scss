@@ -1,26 +1,19 @@
-.series {
+.sets {
   width: 100%;
   height: 80vh;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  .series_search {
+  .sets_search {
     height: 20%;
     padding: 10px;
     display: flex;
     justify-content: center;
     align-items: start;
     gap: 10px;
-    gap: 50px;
     input:focus {
       border: none;
-    }
-    .series_search_select {
-      :hover {
-        border: none;
-        outline: none;
-      }
     }
   }
 }

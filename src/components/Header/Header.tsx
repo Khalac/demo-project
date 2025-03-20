@@ -1,24 +1,24 @@
-import { HeaderNav } from '@/constants/HeaderNav'
-import { NavLink } from 'react-router-dom'
-import './Header.scss'
+import { HEADERNAVIGATE } from "@/constants/HeaderNav";
+import { NavLink } from "react-router-dom";
+import "./Header.scss";
 const Header = () => {
   return (
     <div className="header">
-      {HeaderNav.map((nav) => {
+      {HEADERNAVIGATE.map((e) => {
         return (
           <NavLink
-            to={nav.path}
-            key={nav.id}
+            to={e.path}
+            key={e.id}
             className={({ isActive }) =>
-              isActive ? 'headernav active' : 'headernav'
+              isActive ? "header_nav active" : "header_nav"
             }
           >
-            {nav.name}
+            {e.name}
           </NavLink>
-        )
+        );
       })}
     </div>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

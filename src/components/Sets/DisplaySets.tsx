@@ -1,42 +1,28 @@
-import { useState } from "react";
-import useDebounce from "@/hooks/useDebounce";
 import { useFetch } from "@/hooks/useFetch";
-import Pagination from "@/components/ui/Pagination/Pagination";
+import { useState } from "react";
+import Pagination from "../ui/Pagination/Pagination";
 import SearchResult from "@/components/ui/SearchResult/SearchResult";
 import useFilter from "@/hooks/useFilter";
 
-import "./SearchInput.scss";
+import "./DisplaySets.scss";
+import useDebounce from "@/hooks/useDebounce";
 
-const SearchInput = () => {
-  const [type, setType] = useState("series");
+const DisplaySets = () => {
   const [input, setInput] = useState("");
-
-  const keyword = useDebounce(input, 1000, type);
-  const [page, setPage] = useState(1);
-  const { data, loading, err } = useFetch({
-    type: type,
-    keyword: keyword,
-  });
   const [select, setSelect] = useState("no_filter");
+  const keyword = useDebounce(input, 1000);
+  const { data, loading, err } = useFetch(
+    keyword ? { keyword: keyword, type: "sets" } : { type: "sets" }
+  );
+  const [page, setPage] = useState(1);
 
-  const ITEMPERPAGE = 6;
+  const ITEMPERPAGE = 5;
   const dataFilter = useFilter(select, data);
   return (
-    <div className="searchinput">
-      <form className="searchinput_form">
+    <div className="sets">
+      <div className="sets_search">
         <div>
-          <label>Type: </label>
-          <select
-            className="searchinput_form_select"
-            onChange={(e) => setType(e.target.value)}
-          >
-            <option value="series">Series</option>
-            <option value="sets">Sets</option>
-            <option value="cards">Cards</option>
-          </select>
-        </div>
-        <div>
-          <label>Name: </label>
+          <label>Name of Set: </label>
           <input type="text" onChange={(e) => setInput(e.target.value)} />
         </div>
         <div>
@@ -49,22 +35,23 @@ const SearchInput = () => {
             <option value="no_filter">No filter</option>
             <option value="name_desc">From A to Z</option>
             <option value="name_asc">From Z to A</option>
+            <option value="date_desc">From first release</option>
+            <option value="date_asc">From last release</option>
           </select>
         </div>
-      </form>
+      </div>
       <SearchResult
         data={data}
         loading={loading}
         err={err}
-        type={type}
+        type={"sets"}
         keyword={keyword}
         input={input}
         page={page}
         itemPerPage={ITEMPERPAGE}
         dataFilter={dataFilter}
       />
-
-      {!loading && keyword === input && (
+      {!loading && (
         <Pagination
           data={data}
           ITEMPERPAGE={ITEMPERPAGE}
@@ -72,8 +59,10 @@ const SearchInput = () => {
           setPage={setPage}
         />
       )}
+
+      {err && <div>{err}</div>}
     </div>
   );
 };
 
-export default SearchInput;
+export default DisplaySets;
