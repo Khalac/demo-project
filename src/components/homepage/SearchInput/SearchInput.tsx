@@ -17,7 +17,8 @@ const SearchInput = () => {
   const SearchStr = useDebounce(str, 1000, style);
   const [page, setPage] = useState(1);
   const { data, loading, err } = useFetch({
-    SearchType: "series",
+    SearchType: style,
+    SearchStr: SearchStr,
   });
 
   const itemPerPage = 6;
@@ -42,8 +43,8 @@ const SearchInput = () => {
         </div>
       </form>
       <div className="search_result">
-        {loading && <div>Loading...</div>}
-        {!err && !loading && data.length === 0 && <div>No data found</div>}
+        {loading && <span>Loading...</span>}
+        {!err && !loading && data.length === 0 && <span>No data found</span>}
         {SearchStr === str ? (
           <ul>
             {!loading &&
@@ -79,7 +80,7 @@ const SearchInput = () => {
           />
         )}
 
-        {err && <div>{err}</div>}
+        {err && <span>{err}</span>}
       </div>
     </div>
   );

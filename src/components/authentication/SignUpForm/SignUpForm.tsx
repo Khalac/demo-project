@@ -18,24 +18,29 @@ const SignUpForm = () => {
   const onSubmit: SubmitHandler<SignUpSchema> = () => {};
   return (
     <div className="signupform_container">
+      <div className="signupform_title">SIGN UP</div>
       <form onSubmit={handleSubmit(onSubmit)} className="signupform">
         <div className="forminput">
-          <label>Name</label>
-          <input {...register("name")} />
+          <input {...register("name")} placeholder="Name" />
         </div>
         <div className="forminput">
-          <label>Email</label>
-          <input {...register("email")} />
+          <input {...register("email")} placeholder="Email" />
           {errors && <span>{errors.email?.message}</span>}
         </div>
         <div className="forminput">
-          <label>Password</label>
-          <input type="password" {...register("password")} />
+          <input
+            type="password"
+            {...register("password")}
+            placeholder="Password"
+          />
           {errors && <span>{errors.password?.message}</span>}
         </div>
         <div className="forminput">
-          <label>Password</label>
-          <input type="password" {...register("repassword")} />
+          <input
+            type="password"
+            {...register("repassword")}
+            placeholder="Re-password"
+          />
           {errors && <span>{errors.repassword?.message}</span>}
         </div>
         <button type="submit">Sign Up</button>

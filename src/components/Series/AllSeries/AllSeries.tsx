@@ -20,22 +20,28 @@ const AllSeries = () => {
 
   return (
     <div className="all_series">
-      <label>Input name of Serie</label>
-      <input type="text" onChange={(e) => setInput(e.target.value)} />
-      {loading && <div>Loading...</div>}
-      {!err && !loading && data.length == 0 && <div>No data found</div>}
-      <ul>
-        {!loading &&
-          data &&
-          data.slice((page - 1) * itemPerPage, page * itemPerPage).map((d) => {
-            return (
-              <li key={d.id} className="search_data">
-                <img src={`${d.logo}.webp`} alt="image" />
-                <div>{d.name}</div>
-              </li>
-            );
-          })}
-      </ul>
+      <div className="all_series_search">
+        <label>Input name of Serie</label>
+        <input type="text" onChange={(e) => setInput(e.target.value)} />
+      </div>
+      <div className="all_series_search_result">
+        {loading && <div>Loading...</div>}
+        {!err && !loading && data.length == 0 && <div>No data found</div>}
+        <ul>
+          {!loading &&
+            data &&
+            data
+              .slice((page - 1) * itemPerPage, page * itemPerPage)
+              .map((d) => {
+                return (
+                  <li key={d.id} className="search_data">
+                    <img src={`${d.logo}.webp`} alt="image" />
+                    <div>{d.name}</div>
+                  </li>
+                );
+              })}
+        </ul>
+      </div>
 
       {!loading && (
         <Pagination

@@ -34,20 +34,27 @@ const LogInForm = () => {
   };
   return (
     <div className="loginform_container">
+      <div className="loginform_title">LOG IN</div>
       <form onSubmit={handleSubmit(onSubmit)} className="loginform">
         <div className="forminput">
-          <label>Email</label>
-          <input {...register("email")} />
+          <input {...register("email")} placeholder="Email" />
           {errors && <span>{errors.email?.message}</span>}
         </div>
         <div className="forminput">
-          <label>Password</label>
-          <input type="password" {...register("password")} />
+          <input
+            type="password"
+            {...register("password")}
+            placeholder="Password"
+          />
           {errorPass && <span>{errorPass}</span>}
           {errors && <span>{errors.password?.message}</span>}
         </div>
         <button type="submit">Log In</button>
       </form>
+      <div className="loginform_createaccount">
+        <div>Don't have an account?</div>
+        <button onClick={() => nav("/signup")}>Create an Account</button>
+      </div>
     </div>
   );
 };
