@@ -1,0 +1,17 @@
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin-top: 10px;
+  .pagination_pages {
+    display: flex;
+    gap: 10px;
+    .pagination_page {
+      width: 30px;
+    }
+  }
+  .not_view {
+    visibility: hidden;
+  }
+}

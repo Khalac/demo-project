@@ -3,7 +3,6 @@ import { SignUpSchema } from "@/schema/signup.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import "./SignUpForm.scss";
-import { User, UserData } from "@/data/user.data";
 
 type SignUpSchema = z.infer<typeof SignUpSchema>;
 
@@ -16,15 +15,7 @@ const SignUpForm = () => {
     resolver: zodResolver(SignUpSchema),
   });
 
-  const onSubmit: SubmitHandler<SignUpSchema> = (data) => {
-    const newUser: UserData = {
-      name: data.name,
-      email: data.email,
-      password: data.password,
-    };
-    User.push(newUser);
-    console.log(User);
-  };
+  const onSubmit: SubmitHandler<SignUpSchema> = () => {};
   return (
     <div className="signupform_container">
       <form onSubmit={handleSubmit(onSubmit)} className="signupform">
