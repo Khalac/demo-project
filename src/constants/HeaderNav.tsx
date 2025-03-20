@@ -9,4 +9,9 @@ export const HEADERNAVIGATE = [
     path: "/series",
     name: "Series",
   },
+  {
+    id: "sets",
+    path: "/sets",
+    name: "Sets",
+  },
 ];

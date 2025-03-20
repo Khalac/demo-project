@@ -1,4 +1,5 @@
 import "./SearchResult.scss";
+import { createSearchParams, useNavigate } from "react-router-dom";
 const SearchResult = ({
   data,
   loading,
@@ -8,6 +9,7 @@ const SearchResult = ({
   keyword,
   input,
   itemPerPage,
+  dataFilter,
 }: {
   data: any[];
   loading: boolean;
@@ -17,7 +19,14 @@ const SearchResult = ({
   keyword: string;
   input: string;
   itemPerPage: number;
+  dataFilter: any[];
 }) => {
+  const navigate = useNavigate();
+  const handleClick = (id: string) => {
+    if (type === "sets") {
+      navigate(`/set/${id}`);
+    } else return;
+  };
   return (
     <div className="search_result">
       {loading && <span>Loading...</span>}
@@ -25,12 +34,48 @@ const SearchResult = ({
       {keyword === input ? (
         <ul>
           {!loading &&
-            data &&
+            dataFilter?.length !== 0 &&
+            dataFilter!
+              .slice((page - 1) * itemPerPage, page * itemPerPage)
+              .map((d) => {
+                return (
+                  <li
+                    key={d.id}
+                    className={
+                      type === "series"
+                        ? "search_result_data"
+                        : "search_result_data can_click"
+                    }
+                    onClick={() => handleClick(d.id)}
+                  >
+                    <img
+                      src={
+                        type === "cards"
+                          ? `${d.image}/high.webp`
+                          : `${d.logo}.webp`
+                      }
+                      alt="image"
+                    />
+                    <div>{d.name}</div>
+                  </li>
+                );
+              })}
+          {!loading &&
+            data.length !== 0 &&
+            dataFilter?.length === 0 &&
             data
               .slice((page - 1) * itemPerPage, page * itemPerPage)
               .map((d) => {
                 return (
-                  <li key={d.id} className="search_result_data">
+                  <li
+                    key={d.id}
+                    className={
+                      type === "series"
+                        ? "search_result_data"
+                        : "search_result_data can_click"
+                    }
+                    onClick={() => handleClick(d.id)}
+                  >
                     <img
                       src={
                         type === "cards"
