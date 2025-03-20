@@ -1,6 +1,7 @@
 import { useFetch } from "@/hooks/useFetch";
 import { useState } from "react";
 import Pagination from "../../ui/Pagination/Pagination";
+import SearchResult from "@/components/ui/SearchResult/SearchResult";
 
 import "./AllSeries.scss";
 import useDebounce from "@/hooks/useDebounce";
@@ -8,45 +9,34 @@ import useDebounce from "@/hooks/useDebounce";
 const AllSeries = () => {
   const [input, setInput] = useState("");
 
-  const SearchStr = useDebounce(input, 1000);
+  const keyword = useDebounce(input, 1000);
   const { data, loading, err } = useFetch(
-    SearchStr
-      ? { SearchStr: SearchStr, SearchType: "series" }
-      : { SearchType: "series" }
+    keyword ? { keyword: keyword, type: "series" } : { type: "series" }
   );
   const [page, setPage] = useState(1);
 
-  const itemPerPage = 4;
+  const ITEMPERPAGE = 4;
 
   return (
-    <div className="all_series">
-      <div className="all_series_search">
+    <div className="series">
+      <div className="series_search">
         <label>Input name of Serie</label>
         <input type="text" onChange={(e) => setInput(e.target.value)} />
       </div>
-      <div className="all_series_search_result">
-        {loading && <div>Loading...</div>}
-        {!err && !loading && data.length == 0 && <div>No data found</div>}
-        <ul>
-          {!loading &&
-            data &&
-            data
-              .slice((page - 1) * itemPerPage, page * itemPerPage)
-              .map((d) => {
-                return (
-                  <li key={d.id} className="search_data">
-                    <img src={`${d.logo}.webp`} alt="image" />
-                    <div>{d.name}</div>
-                  </li>
-                );
-              })}
-        </ul>
-      </div>
-
+      <SearchResult
+        data={data}
+        loading={loading}
+        err={err}
+        type={"series"}
+        keyword={keyword}
+        input={input}
+        page={page}
+        itemPerPage={ITEMPERPAGE}
+      />
       {!loading && (
         <Pagination
           data={data}
-          itemPerPage={itemPerPage}
+          ITEMPERPAGE={ITEMPERPAGE}
           page={page}
           setPage={setPage}
         />

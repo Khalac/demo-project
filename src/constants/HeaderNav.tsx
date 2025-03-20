@@ -1,4 +1,4 @@
-export const HeaderNav = [
+export const HEADERNAVIGATE = [
   {
     id: "home",
     path: "/",

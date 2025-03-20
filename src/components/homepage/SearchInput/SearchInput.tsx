@@ -2,35 +2,36 @@ import { useState } from "react";
 import useDebounce from "@/hooks/useDebounce";
 import { useFetch } from "@/hooks/useFetch";
 import Pagination from "@/components/ui/Pagination/Pagination";
+import SearchResult from "@/components/ui/SearchResult/SearchResult";
 
 import "./SearchInput.scss";
 
 type SearchInput = {
-  SearchStr: string;
-  SearchType: string;
+  keyword: string;
+  type: string;
 };
 
 const SearchInput = () => {
-  const [style, setStyle] = useState("series");
-  const [str, setStr] = useState("");
+  const [type, setType] = useState("series");
+  const [input, setInput] = useState("");
 
-  const SearchStr = useDebounce(str, 1000, style);
+  const keyword = useDebounce(input, 1000, type);
   const [page, setPage] = useState(1);
   const { data, loading, err } = useFetch({
-    SearchType: style,
-    SearchStr: SearchStr,
+    type: type,
+    keyword: keyword,
   });
 
-  const itemPerPage = 6;
+  const ITEMPERPAGE = 6;
 
   return (
     <div className="searchinput">
-      <form className="search_form">
+      <form className="searchinput_form">
         <div>
           <label>Type: </label>
           <select
-            className="type_select"
-            onChange={(e) => setStyle(e.target.value)}
+            className="searchinput_form_select"
+            onChange={(e) => setType(e.target.value)}
           >
             <option value="series">Series</option>
             <option value="sets">Sets</option>
@@ -39,49 +40,28 @@ const SearchInput = () => {
         </div>
         <div>
           <label>Name: </label>
-          <input type="text" onChange={(e) => setStr(e.target.value)} />
+          <input type="text" onChange={(e) => setInput(e.target.value)} />
         </div>
       </form>
-      <div className="search_result">
-        {loading && <span>Loading...</span>}
-        {!err && !loading && data.length === 0 && <span>No data found</span>}
-        {SearchStr === str ? (
-          <ul>
-            {!loading &&
-              data &&
-              data
-                .slice((page - 1) * itemPerPage, page * itemPerPage)
-                .map((d) => {
-                  return (
-                    <li key={d.id} className="search_data">
-                      <img
-                        src={
-                          style === "cards"
-                            ? `${d.image}/high.webp`
-                            : `${d.logo}.webp`
-                        }
-                        alt="image"
-                      />
-                      <div>{d.name}</div>
-                    </li>
-                  );
-                })}
-          </ul>
-        ) : (
-          <></>
-        )}
+      <SearchResult
+        data={data}
+        loading={loading}
+        err={err}
+        type={type}
+        keyword={keyword}
+        input={input}
+        page={page}
+        itemPerPage={ITEMPERPAGE}
+      />
 
-        {!loading && SearchStr === str && (
-          <Pagination
-            data={data}
-            itemPerPage={itemPerPage}
-            page={page}
-            setPage={setPage}
-          />
-        )}
-
-        {err && <span>{err}</span>}
-      </div>
+      {!loading && keyword === input && (
+        <Pagination
+          data={data}
+          ITEMPERPAGE={ITEMPERPAGE}
+          page={page}
+          setPage={setPage}
+        />
+      )}
     </div>
   );
 };

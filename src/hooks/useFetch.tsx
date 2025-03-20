@@ -1,25 +1,25 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 export const useFetch = ({
-  SearchType,
-  SearchStr,
+  type,
+  keyword,
 }: {
-  SearchType: string;
-  SearchStr?: string;
+  type: string;
+  keyword?: string;
 }) => {
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState(null);
   const [data, setData] = useState<any[]>([]);
-  const field = SearchType === "cards" ? "image" : "logo";
+  const field = type === "cards" ? "image" : "logo";
   const filter =
-    SearchType === "cards"
+    type === "cards"
       ? "CardsFilters"
-      : SearchType === "series"
+      : type === "series"
       ? "SerieFilters"
       : "SetFilters";
   const search = `
     query Search ($filters: ${filter}) {
-      ${SearchType} (filters: $filters) {
+      ${type} (filters: $filters) {
         name
         ${field}
         id
@@ -28,7 +28,7 @@ export const useFetch = ({
   `;
   const query = `
   query Query {
-   ${SearchType} {
+   ${type} {
      ${field}
     id
     name
@@ -38,18 +38,18 @@ export const useFetch = ({
     setLoading(true);
     axios
       .post(import.meta.env.VITE_API_KEY, {
-        query: SearchStr ? search : query,
-        variables: SearchStr ? { filters: { name: SearchStr } } : {},
+        query: keyword ? search : query,
+        variables: keyword ? { filters: { name: keyword } } : {},
       })
       .then((d) =>
-        SearchType === "cards"
+        type === "cards"
           ? setData(d.data.data.cards)
-          : SearchType === "series"
+          : type === "series"
           ? setData(d.data.data.series)
           : setData(d.data.data.sets)
       )
       .catch((err) => setErr(err.message))
       .finally(() => setLoading(false));
-  }, [SearchStr, SearchType]);
+  }, [keyword, type]);
   return { data, loading, err };
 };
