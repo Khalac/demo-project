@@ -3,12 +3,22 @@
   justify-content: center;
   align-items: center;
   gap: 20px;
-  margin-top: 10px;
+  position: absolute;
+  bottom: 100px;
   .pagination_pages {
     display: flex;
     gap: 10px;
     .pagination_page {
+      color: black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       width: 30px;
+
+      border-radius: 10px;
+    }
+    .page_active {
+      background-color: #4dad5b;
     }
   }
   .not_view {

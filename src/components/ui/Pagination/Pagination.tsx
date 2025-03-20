@@ -85,13 +85,10 @@ const Pagination = ({
         {pages.map((p, index) => {
           return (
             <div
-              className="pagination_page"
-              key={index}
-              style={
-                page === p
-                  ? { color: "red", cursor: "pointer" }
-                  : { cursor: "pointer" }
+              className={
+                page === p ? "pagination_page page_active" : "pagination_page"
               }
+              key={index}
               onClick={() => handlePageChoose(p)}
             >
               {p}

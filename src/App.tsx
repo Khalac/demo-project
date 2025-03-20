@@ -5,6 +5,7 @@ import LoginPage from "@/pages/LoginPage/LoginPage";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import ProtectedRoutes from "./utils/ProtectedRoutes";
 import SignupPage from "./pages/SignupPage/SignupPage";
+import SeriesPage from "./pages/SeriesPage/SeriesPage";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/signup" element={<SignupPage />} />
         <Route element={<ProtectedRoutes />}>
           <Route path="/" element={<HomePage />} />
+          <Route path="/series" element={<SeriesPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

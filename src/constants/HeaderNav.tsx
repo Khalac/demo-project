@@ -4,4 +4,9 @@ export const HeaderNav = [
     path: "/",
     name: "Home",
   },
+  {
+    id: "series",
+    path: "/series",
+    name: "Series",
+  },
 ];

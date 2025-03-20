@@ -3,17 +3,18 @@
   width: 100%;
   justify-content: center;
   align-items: center;
-  gap: 50px;
   padding: 10px 0;
-  border-bottom: 1px solid black;
+  height: 10vh;
   .headernav {
     text-decoration: none;
     font-weight: bold;
     font-size: 20px;
-    color: black;
+    color: #898989;
     cursor: pointer;
+    padding: 20px;
   }
   .active {
-    color: red;
+    background-color: #4dad5b;
+    color: white;
   }
 }
