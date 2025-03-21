@@ -42,7 +42,7 @@ const AllSeries = () => {
       <SearchResult
         data={data}
         loading={loading}
-        err={err}
+        err={err!}
         type={"series"}
         page={page}
         itemPerPage={ITEMPERPAGE}
@@ -56,8 +56,6 @@ const AllSeries = () => {
           setPage={setPage}
         />
       )}
-
-      {err && <div>{err}</div>}
     </div>
   );
 };

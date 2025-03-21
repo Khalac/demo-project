@@ -21,6 +21,7 @@ const SearchInput = () => {
 
   const ITEMPERPAGE = 6;
   const dataFilter = useFilter(select, data);
+
   return (
     <div className="searchinput">
       <form className="searchinput_form">
@@ -55,7 +56,7 @@ const SearchInput = () => {
       <SearchResult
         data={data}
         loading={loading}
-        err={err}
+        err={err!}
         type={type}
         page={page}
         itemPerPage={ITEMPERPAGE}

@@ -3,7 +3,7 @@ import { useFetch } from "@/hooks/useFetch";
 const SetInformation = () => {
   const { id } = useParams();
   const { data, loading, err } = useFetch({ type: "set", id: id });
-  console.log(data, loading, err);
+
   return (
     <div className="setinformation">
       {loading && <span>Loading ... </span>}

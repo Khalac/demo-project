@@ -43,7 +43,7 @@ const DisplaySets = () => {
       <SearchResult
         data={data}
         loading={loading}
-        err={err}
+        err={err!}
         type={"sets"}
         page={page}
         itemPerPage={ITEMPERPAGE}
@@ -57,8 +57,6 @@ const DisplaySets = () => {
           setPage={setPage}
         />
       )}
-
-      {err && <div>{err}</div>}
     </div>
   );
 };

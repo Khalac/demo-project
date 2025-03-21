@@ -8,7 +8,7 @@ type SearchResultListProps = {
   type: string;
   handleItemClick: (a: string) => void;
 };
-
+//Split SearchResult into a component
 const SearchResultList = ({
   data,
   page,
