@@ -44,8 +44,6 @@ const AllSeries = () => {
         loading={loading}
         err={err}
         type={"series"}
-        keyword={keyword}
-        input={input}
         page={page}
         itemPerPage={ITEMPERPAGE}
         dataFilter={dataFilter}
@@ -53,7 +51,7 @@ const AllSeries = () => {
       {!loading && (
         <Pagination
           data={data}
-          ITEMPERPAGE={ITEMPERPAGE}
+          itemPerPage={ITEMPERPAGE}
           page={page}
           setPage={setPage}
         />
