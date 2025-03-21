@@ -1,19 +1,17 @@
 import { useEffect, useState } from "react";
 import "./Pagination.scss";
-const Pagination = ({
-  data,
-  ITEMPERPAGE,
-  page,
-  setPage,
-}: {
-  data: any[];
-  ITEMPERPAGE: number;
+import { DataFetchType } from "@/types/dataFetch";
+
+type PaginationProps = {
+  data: DataFetchType[];
+  itemPerPage: number;
   page: number;
   setPage: React.Dispatch<React.SetStateAction<any>>;
-}) => {
+};
+const Pagination = ({ data, itemPerPage, page, setPage }: PaginationProps) => {
   const [pages, setPages] = useState<number[]>([]);
   useEffect(() => {
-    let numberPages = Math.ceil(data.length / ITEMPERPAGE);
+    let numberPages = Math.ceil(data.length / itemPerPage);
     setPage(1);
     if (numberPages >= 1 && numberPages <= 10)
       setPages(Array.from({ length: numberPages }, (_, i) => (i = i + 1)));
@@ -22,7 +20,7 @@ const Pagination = ({
     } else {
       setPages([]);
     }
-  }, [data, ITEMPERPAGE]);
+  }, [data, itemPerPage]);
 
   const handlePagePrev = () => {
     if (pages[0] != 1 && page - 1 < pages[pages.length / 2]) {
@@ -36,11 +34,11 @@ const Pagination = ({
 
     if (
       p > pages[pages.length / 2] &&
-      pages[pages.length - 1] < Math.ceil(data.length / ITEMPERPAGE)
+      pages[pages.length - 1] < Math.ceil(data.length / itemPerPage)
     ) {
       if (
         pages[pages.length - 1] + pages.indexOf(p) - pages.length / 2 <=
-        Math.ceil(data.length / ITEMPERPAGE)
+        Math.ceil(data.length / itemPerPage)
       )
         setPages(
           Array.from(pages, (e) => e + pages.indexOf(p) - pages.length / 2)
@@ -50,7 +48,7 @@ const Pagination = ({
           Array.from(
             pages,
             (e) =>
-              e + Math.ceil(data.length / ITEMPERPAGE) - pages[pages.length - 1]
+              e + Math.ceil(data.length / itemPerPage) - pages[pages.length - 1]
           )
         );
     } else if (p < pages[pages.length / 2] && pages[0] > 1) {
@@ -63,7 +61,7 @@ const Pagination = ({
   };
   const handlePageNext = () => {
     if (
-      pages[pages.length - 1] != Math.ceil(data.length / ITEMPERPAGE) &&
+      pages[pages.length - 1] != Math.ceil(data.length / itemPerPage) &&
       page + 1 > pages[pages.length / 2]
     ) {
       setPages(Array.from(pages, (e) => e + 1));
@@ -102,7 +100,7 @@ const Pagination = ({
       <button
         onClick={handlePageNext}
         className={
-          page < Math.ceil(data.length / ITEMPERPAGE)
+          page < Math.ceil(data.length / itemPerPage)
             ? "pagination_button"
             : "pagination_button--not_view"
         }

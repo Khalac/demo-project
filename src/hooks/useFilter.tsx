@@ -1,4 +1,5 @@
-const useFilter = (filterString: string, data: any[]) => {
+import { DataFetchType } from "@/types/dataFetch";
+const useFilter = (filterString: string, data: DataFetchType[]) => {
   if (filterString === "name_desc") {
     const temp = data.slice().sort((a, b) => {
       const nameA = a.name.toUpperCase();
@@ -33,7 +34,7 @@ const useFilter = (filterString: string, data: any[]) => {
   } else if (filterString === "date_desc") {
     const temp = data.slice().sort((a, b) => {
       return (
-        new Date(a.releaseDate).getTime() - new Date(b.releaseDate).getTime()
+        new Date(a.releaseDate!).getTime() - new Date(b.releaseDate!).getTime()
       );
     });
     return temp;
@@ -42,7 +43,8 @@ const useFilter = (filterString: string, data: any[]) => {
       .slice()
       .sort((a, b) => {
         return (
-          new Date(a.releaseDate).getTime() - new Date(b.releaseDate).getTime()
+          new Date(a.releaseDate!).getTime() -
+          new Date(b.releaseDate!).getTime()
         );
       })
       .reverse();

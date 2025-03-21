@@ -57,8 +57,6 @@ const SearchInput = () => {
         loading={loading}
         err={err}
         type={type}
-        keyword={keyword}
-        input={input}
         page={page}
         itemPerPage={ITEMPERPAGE}
         dataFilter={dataFilter}
@@ -67,7 +65,7 @@ const SearchInput = () => {
       {!loading && keyword === input && (
         <Pagination
           data={data}
-          ITEMPERPAGE={ITEMPERPAGE}
+          itemPerPage={ITEMPERPAGE}
           page={page}
           setPage={setPage}
         />

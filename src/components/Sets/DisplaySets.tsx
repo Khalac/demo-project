@@ -45,8 +45,6 @@ const DisplaySets = () => {
         loading={loading}
         err={err}
         type={"sets"}
-        keyword={keyword}
-        input={input}
         page={page}
         itemPerPage={ITEMPERPAGE}
         dataFilter={dataFilter}
@@ -54,7 +52,7 @@ const DisplaySets = () => {
       {!loading && (
         <Pagination
           data={data}
-          ITEMPERPAGE={ITEMPERPAGE}
+          itemPerPage={ITEMPERPAGE}
           page={page}
           setPage={setPage}
         />

@@ -15,7 +15,7 @@ export const useFetch = ({
   const field = type === "cards" ? "image" : "logo";
   const extraField =
     type === "set"
-      ? `tcgOnline
+      ? `
     releaseDate
     cardCount {
       total

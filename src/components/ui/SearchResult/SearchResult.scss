@@ -6,24 +6,6 @@
 
   ul {
     list-style: none;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-
-    li {
-      padding: 10px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
-    .can_click {
-      cursor: pointer;
-    }
-    img {
-      width: 20%;
-      height: auto;
-    }
   }
   span {
     font-size: 30px;
