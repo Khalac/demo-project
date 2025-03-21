@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { DataFetchType } from "@/types/dataFetch";
 export const useFetch = ({
   type,
   keyword,
@@ -10,8 +11,8 @@ export const useFetch = ({
   id?: string;
 }) => {
   const [loading, setLoading] = useState(false);
-  const [err, setErr] = useState(null);
-  const [data, setData] = useState<any[]>([]);
+  const [err, setErr] = useState<string>();
+  const [data, setData] = useState<DataFetchType[]>([]);
   const field = type === "cards" ? "image" : "logo";
   const extraField =
     type === "set"
@@ -40,47 +41,61 @@ export const useFetch = ({
       }
     }
   `;
-  const query = `
+  const queryDetail = `
   query Query {
-   ${type} {
-     ${field}
+  ${type} {
+    ${field}
     id
     name
+    ${extraField}
   }
 }`;
-  const queryDetail = `
-query Query {
- ${type} {
-   ${field}
-  id
-  name
-  ${extraField}
-}
-}`;
-  useEffect(() => {
+
+  const fetchData = async (controller: AbortController) => {
     setLoading(true);
-    axios
-      .post(import.meta.env.VITE_API_KEY, {
-        query: id ? queryDetail : keyword ? search : query,
-        variables: id
-          ? { filters: { id: id } }
-          : keyword
-          ? { filters: { name: keyword } }
-          : {},
-      })
-      .then((d) =>
-        type === "set"
-          ? setData(d.data.data.set)
-          : type === "card"
-          ? setData(d.data.data.card)
-          : type === "cards"
-          ? setData(d.data.data.cards)
-          : type === "series"
-          ? setData(d.data.data.series)
-          : setData(d.data.data.sets)
-      )
-      .catch((err) => setErr(err.message))
-      .finally(() => setLoading(false));
-  }, [keyword, type]);
+    console.log("1");
+    try {
+      console.log("2");
+      const data = await axios.post(
+        import.meta.env.VITE_API_KEY,
+        {
+          query: id ? queryDetail : search,
+          variables: id
+            ? { filters: { id: id } }
+            : { filters: { name: keyword } },
+        },
+        {
+          signal: controller.signal,
+        }
+      );
+      type === "set"
+        ? setData(data.data.data.set)
+        : type === "card"
+        ? setData(data.data.data.card)
+        : type === "cards"
+        ? setData(data.data.data.cards)
+        : type === "series"
+        ? setData(data.data.data.series)
+        : setData(data.data.data.sets);
+    } catch (err) {
+      console.log("3");
+      if ((err as Error).name === "CanceledError") {
+        return 0;
+      } else {
+        setErr((err as Error).message);
+      }
+    } finally {
+      console.log("4");
+      setLoading(false);
+    }
+  };
+  //TODO: fix call api call twice
+  useEffect(() => {
+    const controller = new AbortController();
+    fetchData(controller);
+    return () => {
+      controller.abort();
+    };
+  }, [keyword, type, id]);
   return { data, loading, err };
 };

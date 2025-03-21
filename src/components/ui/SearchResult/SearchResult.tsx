@@ -5,7 +5,7 @@ import SearchResultList from "../SearchResultList/SearchResultList";
 type SearchResultProps = {
   data: DataFetchType[];
   loading: boolean;
-  err: null;
+  err: string;
   page: number;
   type: string;
   itemPerPage: number;
@@ -27,6 +27,7 @@ const SearchResult = ({
     } else return;
   };
   const dataRender = dataFilter.length === 0 ? data : dataFilter;
+
   return (
     <div className="search_result">
       {loading && <span>Loading...</span>}

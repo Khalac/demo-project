@@ -1,6 +1,5 @@
-import SignUpForm from "@/components/Authentication/SignUpForm/SignUpForm";
 import "./SignupPage.scss";
-
+import SignUpForm from "@/components/authentication/SignUpForm/SignUpForm";
 const SignupPage = () => {
   return (
     <div>
