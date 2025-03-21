@@ -53,9 +53,8 @@ export const useFetch = ({
 
   const fetchData = async (controller: AbortController) => {
     setLoading(true);
-    console.log("1");
+
     try {
-      console.log("2");
       const data = await axios.post(
         import.meta.env.VITE_API_KEY,
         {
@@ -78,16 +77,14 @@ export const useFetch = ({
         ? setData(data.data.data.series)
         : setData(data.data.data.sets);
     } catch (err) {
-      console.log("3");
       if ((err as Error).name === "CanceledError") {
         return 0;
       } else {
         setErr((err as Error).message);
       }
-    } finally {
-      console.log("4");
-      setLoading(false);
     }
+
+    setLoading(false);
   };
   //TODO: fix call api call twice
   useEffect(() => {
