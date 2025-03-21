@@ -3,9 +3,8 @@ import { useState } from "react";
 import Pagination from "../../ui/Pagination/Pagination";
 import SearchResult from "@/components/ui/SearchResult/SearchResult";
 import useFilter from "@/hooks/useFilter";
-
-import "./AllSeries.scss";
 import useDebounce from "@/hooks/useDebounce";
+import "./AllSeries.scss";
 
 const AllSeries = () => {
   const [input, setInput] = useState("");

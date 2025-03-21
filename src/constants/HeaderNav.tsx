@@ -14,4 +14,9 @@ export const HEADERNAVIGATE = [
     path: "/sets",
     name: "Sets",
   },
+  {
+    id: "cards",
+    path: "/cards",
+    name: "Cards",
+  },
 ];

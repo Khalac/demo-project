@@ -14,7 +14,7 @@ export const useFetch = ({
   const [err, setErr] = useState<string>();
   const [data, setData] = useState<DataFetchType[]>([]);
   const field = type === "cards" ? "image" : "logo";
-  const extraField =
+  const extraFieldQuery =
     type === "set"
       ? `
     releaseDate
@@ -25,6 +25,12 @@ export const useFetch = ({
       name
       id
     }`
+      : "";
+  const extraFieldSearch =
+    type === "sets"
+      ? `
+    releaseDate
+    `
       : "";
   const filter =
     type === "cards"
@@ -38,6 +44,7 @@ export const useFetch = ({
         name
         ${field}
         id
+         ${extraFieldSearch}
       }
     }
   `;
@@ -47,7 +54,7 @@ export const useFetch = ({
     ${field}
     id
     name
-    ${extraField}
+    ${extraFieldQuery}
   }
 }`;
 

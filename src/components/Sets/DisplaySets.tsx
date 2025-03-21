@@ -14,8 +14,8 @@ const DisplaySets = () => {
   const { data, loading, err } = useFetch(
     keyword ? { keyword: keyword, type: "sets" } : { type: "sets" }
   );
-  const [page, setPage] = useState(1);
 
+  const [page, setPage] = useState(1);
   const ITEMPERPAGE = 5;
   const dataFilter = useFilter(select, data);
   return (

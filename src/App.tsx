@@ -8,6 +8,7 @@ import SignupPage from "./pages/SignupPage/SignupPage";
 import SeriesPage from "./pages/SeriesPage/SeriesPage";
 import SetsPage from "./pages/SetsPage/SetsPage";
 import DetailSet from "./pages/DetailSet/DetailSet";
+import CardsPage from "./pages/CardsPage/CardsPage";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/series" element={<SeriesPage />} />
           <Route path="/sets" element={<SetsPage />} />
           <Route path="/set/:id" element={<DetailSet />} />
+          <Route path="/cards" element={<CardsPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
