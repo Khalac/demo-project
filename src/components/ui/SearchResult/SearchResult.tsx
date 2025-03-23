@@ -1,16 +1,16 @@
-import "./SearchResult.scss";
-import { useNavigate } from "react-router-dom";
-import { DataFetchType } from "@/types/dataFetch";
-import SearchResultList from "../SearchResultList/SearchResultList";
+import './SearchResult.scss'
+import { useNavigate } from 'react-router-dom'
+import { DataFetchType } from '@/types/dataFetch'
+import SearchResultList from '../SearchResultList/SearchResultList'
 type SearchResultProps = {
-  data: DataFetchType[];
-  loading: boolean;
-  err: string;
-  page: number;
-  type: string;
-  itemPerPage: number;
-  dataFilter: DataFetchType[];
-};
+  data: DataFetchType[]
+  loading: boolean
+  err: string
+  page: number
+  type: string
+  itemPerPage: number
+  dataFilter: DataFetchType[]
+}
 const SearchResult = ({
   data,
   loading,
@@ -20,13 +20,15 @@ const SearchResult = ({
   itemPerPage,
   dataFilter,
 }: SearchResultProps) => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const handleItemClick = (id: string) => {
-    if (type === "sets") {
-      navigate(`/set/${id}`);
-    } else return;
-  };
-  const dataRender = dataFilter.length === 0 ? data : dataFilter;
+    if (type === 'sets') {
+      navigate(`/set/${id}`)
+    } else if (type === 'cards') {
+      navigate(`/card/${id}`)
+    } else return
+  }
+  const dataRender = dataFilter.length === 0 ? data : dataFilter
 
   return (
     <div className="search_result">
@@ -46,7 +48,7 @@ const SearchResult = ({
       </ul>
       {err && <span>{err}</span>}
     </div>
-  );
-};
+  )
+}
 
-export default SearchResult;
+export default SearchResult

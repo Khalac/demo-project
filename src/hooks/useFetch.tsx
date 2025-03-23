@@ -1,21 +1,21 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { DataFetchType } from "@/types/dataFetch";
+import axios from 'axios'
+import { useEffect, useState } from 'react'
+import { DataFetchType } from '@/types/dataFetch'
 export const useFetch = ({
   type,
   keyword,
   id,
 }: {
-  type: string;
-  keyword?: string;
-  id?: string;
+  type: string
+  keyword?: string
+  id?: string
 }) => {
-  const [loading, setLoading] = useState(false);
-  const [err, setErr] = useState<string>();
-  const [data, setData] = useState<DataFetchType[]>([]);
-  const field = type === "cards" ? "image" : "logo";
+  const [loading, setLoading] = useState(false)
+  const [err, setErr] = useState<string>()
+  const [data, setData] = useState<DataFetchType[]>([])
+  const field = type === 'cards' || type === 'card' ? 'image' : 'logo'
   const extraFieldQuery =
-    type === "set"
+    type === 'set'
       ? `
     releaseDate
     cardCount {
@@ -25,19 +25,40 @@ export const useFetch = ({
       name
       id
     }`
-      : "";
+      : `
+    attacks {
+      cost
+      damage
+      effect
+      name
+    }
+    category
+    hp
+    rarity
+    effect
+    trainerType
+    types
+    energyType
+    set {
+      name
+    }
+  `
   const extraFieldSearch =
-    type === "sets"
+    type === 'sets'
       ? `
     releaseDate
     `
-      : "";
+      : type === 'cards'
+      ? `
+      types
+      `
+      : ''
   const filter =
-    type === "cards"
-      ? "CardsFilters"
-      : type === "series"
-      ? "SerieFilters"
-      : "SetFilters";
+    type === 'cards' || type === 'card'
+      ? 'CardsFilters'
+      : type === 'sets' || type === 'set'
+      ? 'SetFilters'
+      : 'SeriesFilters'
   const search = `
     query Search ($filters: ${filter}) {
       ${type} (filters: $filters) {
@@ -47,19 +68,19 @@ export const useFetch = ({
          ${extraFieldSearch}
       }
     }
-  `;
+  `
   const queryDetail = `
-  query Query ($filters: SetFilters) {
+  query Query ($filters:  ${filter}) {
   ${type} (filters: $filters){
     ${field}
     id
     name
     ${extraFieldQuery}
   }
-}`;
+}`
 
   const fetchData = async (controller: AbortController) => {
-    setLoading(true);
+    setLoading(true)
 
     try {
       const data = await axios.post(
@@ -73,33 +94,35 @@ export const useFetch = ({
         {
           signal: controller.signal,
         }
-      );
-      type === "set"
+      )
+
+      type === 'set'
         ? setData([data.data.data.set])
-        : type === "card"
-        ? setData(data.data.data.card)
-        : type === "cards"
+        : type === 'card'
+        ? setData([data.data.data.card])
+        : type === 'cards'
         ? setData(data.data.data.cards)
-        : type === "series"
+        : type === 'series'
         ? setData(data.data.data.series)
-        : setData(data.data.data.sets);
+        : setData(data.data.data.sets)
     } catch (err) {
-      if ((err as Error).name === "CanceledError") {
-        return 0;
+      if ((err as Error).name === 'CanceledError') {
+        return 0
       } else {
-        setErr((err as Error).message);
+        console.log(err as Error)
+        setErr((err as Error).message)
       }
     }
 
-    setLoading(false);
-  };
+    setLoading(false)
+  }
   //TODO: fix call api call twice
   useEffect(() => {
-    const controller = new AbortController();
-    fetchData(controller);
+    const controller = new AbortController()
+    fetchData(controller)
     return () => {
-      controller.abort();
-    };
-  }, [keyword, type, id]);
-  return { data, loading, err };
-};
+      controller.abort()
+    }
+  }, [keyword, type, id])
+  return { data, loading, err }
+}
