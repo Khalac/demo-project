@@ -10,6 +10,7 @@ type SearchResultProps = {
   type: string
   itemPerPage: number
   dataFilter: DataFetchType[]
+  liked?: boolean
 }
 const SearchResult = ({
   data,
@@ -19,6 +20,7 @@ const SearchResult = ({
   type,
   itemPerPage,
   dataFilter,
+  liked,
 }: SearchResultProps) => {
   const navigate = useNavigate()
   const handleItemClick = (id: string) => {
@@ -28,13 +30,17 @@ const SearchResult = ({
       navigate(`/card/${id}`)
     } else return
   }
-  const dataRender = dataFilter.length === 0 ? data : dataFilter
+  const dataRender = dataFilter.length === 0 && !liked ? data : dataFilter
 
   return (
-    <div className="search_result">
-      {loading && <span>Loading...</span>}
-      {!err && !loading && data.length === 0 && <span>No data found</span>}
-
+    <div className="search-result">
+      {loading && <span className="search-result__loading">Loading...</span>}
+      {!liked && !err && !loading && data.length === 0 && (
+        <span className="search-result__empty">No data found</span>
+      )}
+      {liked && dataRender.length === 0 && (
+        <span className="search-result__empty">No data found</span>
+      )}
       <ul>
         {!loading && (
           <SearchResultList
@@ -46,7 +52,7 @@ const SearchResult = ({
           />
         )}
       </ul>
-      {err && <span>{err}</span>}
+      {err && <span className="search-result__error">{err}</span>}
     </div>
   )
 }

@@ -25,7 +25,8 @@ export const useFetch = ({
       name
       id
     }`
-      : `
+      : type === 'card'
+      ? `
     attacks {
       cost
       damage
@@ -43,6 +44,7 @@ export const useFetch = ({
       name
     }
   `
+      : ''
   const extraFieldSearch =
     type === 'sets'
       ? `
@@ -58,7 +60,7 @@ export const useFetch = ({
       ? 'CardsFilters'
       : type === 'sets' || type === 'set'
       ? 'SetFilters'
-      : 'SeriesFilters'
+      : 'SerieFilters'
   const search = `
     query Search ($filters: ${filter}) {
       ${type} (filters: $filters) {
@@ -109,7 +111,7 @@ export const useFetch = ({
       if ((err as Error).name === 'CanceledError') {
         return 0
       } else {
-        console.log(err as Error)
+        console.log(err)
         setErr((err as Error).message)
       }
     }

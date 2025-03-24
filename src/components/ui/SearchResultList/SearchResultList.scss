@@ -1,20 +1,27 @@
-.searchresultlist {
+.search-result-list {
   width: 100%;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  li {
-    padding: 10px;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 20px;
+
+  &__item {
+    padding: 20px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    border-radius: 12px;
   }
-  .can_click {
+
+  &__item--clickable {
     cursor: pointer;
   }
-  img {
+
+  &__image {
     width: 20%;
     height: auto;
+    border-radius: 10px;
+    margin-bottom: 15px;
   }
 }

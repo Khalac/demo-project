@@ -4,7 +4,7 @@ import CardInformation from '@/components/CardInformation/CardInformation'
 
 const DetailCar = () => {
   return (
-    <div className="detailcard">
+    <div className="detail-card">
       <Header />
       <CardInformation />
     </div>

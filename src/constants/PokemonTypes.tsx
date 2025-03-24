@@ -12,8 +12,8 @@ export const POKEMONTYPES = [
     name: 'Water',
   },
   {
-    id: 'Electric',
-    name: 'Electric',
+    id: 'Lightning',
+    name: 'Lightning',
   },
   {
     id: 'Grass',

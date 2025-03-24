@@ -2,26 +2,35 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 20px;
-  position: absolute;
-  bottom: 100px;
-  .pagination_pages {
-    display: flex;
-    gap: 10px;
-    .pagination_pages_page {
-      cursor: pointer;
-      color: black;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 30px;
-      border-radius: 10px;
+  gap: 30px;
+  margin-top: 100px;
+
+  &__button {
+    height: 30px;
+    width: 30px;
+    border: none;
+    border: 1px solid #4dad5b;
+    color: #4dad5b;
+    cursor: pointer;
+    border-radius: 4px;
+
+    &:hover {
+      background-color: #3c8a47;
+      color: white;
     }
-    .on_page {
-      background-color: #4dad5b;
+
+    &--active {
+      background-color: #3c8a47;
+      color: white;
+    }
+
+    &--disabled {
+      visibility: hidden;
     }
   }
-  .pagination_button--not_view {
-    visibility: hidden;
+
+  .pagination_pages {
+    display: flex;
+    gap: 15px;
   }
 }

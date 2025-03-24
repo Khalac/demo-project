@@ -2,10 +2,12 @@ import { DataFetchType } from '@/types/dataFetch'
 const useFilter = (
   filterString: string,
   data: DataFetchType[],
-  typePokemon?: string[]
+  typePokemon?: string[],
+  keyword?: string
 ) => {
+  console.log(keyword, typePokemon, data)
   if (filterString === 'name_desc' && typePokemon !== undefined) {
-    const temp = data
+    let temp = data
       .slice()
       .sort((a, b) => {
         const nameA = a.name.toUpperCase()
@@ -26,10 +28,14 @@ const useFilter = (
 
         return Array.isArray(item.types) && typePokemon.includes(item.types[0])
       })
-
+    if (keyword) {
+      temp = temp.filter((item) => {
+        return item.name.toLowerCase().includes(keyword!.toLowerCase())
+      })
+    }
     return temp
   } else if (filterString === 'name_asc' && typePokemon !== undefined) {
-    const temp = data
+    let temp = data
       .slice()
       .sort((a, b) => {
         const nameA = a.name.toUpperCase()
@@ -51,6 +57,11 @@ const useFilter = (
         return Array.isArray(item.types) && typePokemon.includes(item.types[0])
       })
       .reverse()
+    if (keyword) {
+      temp = temp.filter((item) => {
+        return item.name.toLowerCase().includes(keyword!.toLowerCase())
+      })
+    }
     return temp
   } else if (filterString === 'date_desc') {
     const temp = data.slice().sort((a, b) => {
@@ -71,13 +82,18 @@ const useFilter = (
       .reverse()
     return temp
   } else if (filterString === 'no_filter' && typePokemon !== undefined) {
-    const temp = data.slice().filter((item) => {
+    let temp = data.slice().filter((item) => {
       if (typePokemon.length === 0) {
         return true
       }
 
       return Array.isArray(item.types) && typePokemon.includes(item.types[0])
     })
+    if (keyword) {
+      temp = temp.filter((item) => {
+        return item.name.toLowerCase().includes(keyword!.toLowerCase())
+      })
+    }
 
     return temp
   } else return []

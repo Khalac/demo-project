@@ -1,35 +1,38 @@
-import { useFetch } from "@/hooks/useFetch";
-import { useState } from "react";
-import Pagination from "../ui/Pagination/Pagination";
-import SearchResult from "@/components/ui/SearchResult/SearchResult";
-import useFilter from "@/hooks/useFilter";
+import { useFetch } from '@/hooks/useFetch'
+import { useState } from 'react'
+import Pagination from '../ui/Pagination/Pagination'
+import SearchResult from '@/components/ui/SearchResult/SearchResult'
+import useFilter from '@/hooks/useFilter'
 
-import "./DisplaySets.scss";
-import useDebounce from "@/hooks/useDebounce";
+import './DisplaySets.scss'
+import useDebounce from '@/hooks/useDebounce'
 
 const DisplaySets = () => {
-  const [input, setInput] = useState("");
-  const [select, setSelect] = useState("no_filter");
-  const keyword = useDebounce(input, 1000);
+  const [input, setInput] = useState('')
+  const [select, setSelect] = useState('no_filter')
+  const keyword = useDebounce(input, 1000)
   const { data, loading, err } = useFetch(
-    keyword ? { keyword: keyword, type: "sets" } : { type: "sets" }
-  );
+    keyword ? { keyword: keyword, type: 'sets' } : { type: 'sets' }
+  )
 
-  const [page, setPage] = useState(1);
-  const ITEMPERPAGE = 5;
-  const dataFilter = useFilter(select, data);
+  const [page, setPage] = useState(1)
+  const ITEMPERPAGE = 5
+  const dataFilter = useFilter(select, data)
   return (
     <div className="sets">
-      <div className="sets_search">
-        <div>
-          <label>Name of Set: </label>
-          <input type="text" onChange={(e) => setInput(e.target.value)} />
+      <div className="sets__search">
+        <div className="sets__search-group">
+          <label className="sets__label">Name of Set: </label>
+          <input
+            type="text"
+            className="sets__input"
+            onChange={(e) => setInput(e.target.value)}
+          />
         </div>
-        <div>
-          {" "}
-          <label>Filter: </label>
+        <div className="sets__search-group">
+          <label className="sets__label">Filter: </label>
           <select
-            className="series_search_select"
+            className="sets__select"
             onChange={(e) => setSelect(e.target.value)}
           >
             <option value="no_filter">No filter</option>
@@ -44,7 +47,7 @@ const DisplaySets = () => {
         data={data}
         loading={loading}
         err={err!}
-        type={"sets"}
+        type={'sets'}
         page={page}
         itemPerPage={ITEMPERPAGE}
         dataFilter={dataFilter}
@@ -58,7 +61,7 @@ const DisplaySets = () => {
         />
       )}
     </div>
-  );
-};
+  )
+}
 
-export default DisplaySets;
+export default DisplaySets
