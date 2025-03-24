@@ -42,8 +42,8 @@ export const useFetch = ({
     }
   `;
   const queryDetail = `
-  query Query {
-  ${type} {
+  query Query ($filters: SetFilters) {
+  ${type} (filters: $filters){
     ${field}
     id
     name
@@ -68,7 +68,7 @@ export const useFetch = ({
         }
       );
       type === "set"
-        ? setData(data.data.data.set)
+        ? setData([data.data.data.set])
         : type === "card"
         ? setData(data.data.data.card)
         : type === "cards"
