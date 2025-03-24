@@ -37,4 +37,11 @@
     border: 2px dashed #e5e7eb;
     margin: 20px 0;
   }
+  &__list {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 20px;
+  }
 }

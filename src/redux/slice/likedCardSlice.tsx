@@ -10,7 +10,7 @@ const initialState = {
   user: JSON.parse(localStorage.getItem("currentUser") || "null"),
 };
 
-const likedCardSlice = createSlice({
+const userLikedCardSlice = createSlice({
   name: "likedCard",
   initialState,
   reducers: {
@@ -40,15 +40,15 @@ const likedCardSlice = createSlice({
       localStorage.setItem("users", JSON.stringify(updatedUsers));
       localStorage.setItem("currentUser", JSON.stringify(state.user));
     },
-    login: (state, action) => {
+    loginAction: (state, action) => {
       state.user = action.payload;
     },
-    logout: (state) => {
+    logoutAction: (state) => {
       state.user = null;
     },
   },
 });
 
-export const { addLikedCard, unlikedCard, logout, login } =
-  likedCardSlice.actions;
-export default likedCardSlice.reducer;
+export const { addLikedCard, unlikedCard, logoutAction, loginAction } =
+  userLikedCardSlice.actions;
+export default userLikedCardSlice.reducer;
