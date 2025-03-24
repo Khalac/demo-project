@@ -1,52 +1,96 @@
-import { z } from "zod";
-import { SignUpSchema } from "@/schema/signup.schema";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { SubmitHandler, useForm } from "react-hook-form";
-import "./SignUpForm.scss";
+import { z } from 'zod'
+import { SignUpSchema } from '@/schema/signup.schema'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm, SubmitHandler } from 'react-hook-form'
+import './SignUpForm.scss'
+import { AuthContext } from '@/context/AuthContext'
+import { useContext, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
-type SignUpSchema = z.infer<typeof SignUpSchema>;
+type SignUpSchema = z.infer<typeof SignUpSchema>
 
 const SignUpForm = () => {
+  const navigate = useNavigate()
+  const { SignUp } = useContext(AuthContext)
+  const [error, setError] = useState('')
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(SignUpSchema),
-  });
+  })
 
-  const onSubmit: SubmitHandler<SignUpSchema> = () => {};
+  const onSubmit: SubmitHandler<SignUpSchema> = (data) => {
+    if (SignUp(data)) {
+      navigate('/login')
+    } else {
+      setError('User already exists')
+    }
+  }
+
   return (
-    <div className="signupform_container">
-      <div className="signupform_title">SIGN UP</div>
-      <form onSubmit={handleSubmit(onSubmit)} className="signupform">
-        <div className="forminput">
-          <input {...register("name")} placeholder="Name" />
+    <div className="signup-form">
+      <div className="signup-form__title">SIGN UP</div>
+      <form onSubmit={handleSubmit(onSubmit)} className="signup-form__form">
+        <div className="signup-form__input-group">
+          <input {...register('name')} placeholder="Name" />
+          {errors.name && (
+            <span className="signup-form__input-group--error">
+              {errors.name.message}
+            </span>
+          )}
         </div>
-        <div className="forminput">
-          <input {...register("email")} placeholder="Email" />
-          {errors && <span>{errors.email?.message}</span>}
+        <div className="signup-form__input-group">
+          <input {...register('email')} placeholder="Email" />
+          {errors.email && (
+            <span className="signup-form__input-group--error">
+              {errors.email.message}
+            </span>
+          )}
         </div>
-        <div className="forminput">
+        <div className="signup-form__input-group">
           <input
             type="password"
-            {...register("password")}
+            {...register('password')}
             placeholder="Password"
           />
-          {errors && <span>{errors.password?.message}</span>}
+          {errors.password && (
+            <span className="signup-form__input-group--error">
+              {errors.password.message}
+            </span>
+          )}
         </div>
-        <div className="forminput">
+        <div className="signup-form__input-group">
           <input
             type="password"
-            {...register("repassword")}
+            {...register('repassword')}
             placeholder="Re-password"
           />
-          {errors && <span>{errors.repassword?.message}</span>}
+          {errors.repassword && (
+            <span className="signup-form__input-group--error">
+              {errors.repassword.message}
+            </span>
+          )}
         </div>
-        <button type="submit">Sign Up</button>
+        {error && (
+          <span className="signup-form__input-group--error">{error}</span>
+        )}
+        <button type="submit" className="signup-form__button">
+          Sign Up
+        </button>
       </form>
+      <div className="signup-form__footer">
+        <div className="signup-form__footer-text">Already have an account?</div>
+        <button
+          onClick={() => navigate('/login')}
+          className="signup-form__button signup-form__button--outline"
+        >
+          Log In
+        </button>
+      </div>
     </div>
-  );
-};
+  )
+}
 
-export default SignUpForm;
+export default SignUpForm

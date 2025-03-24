@@ -1,21 +1,12 @@
 import { DataFetchType } from "@/types/dataFetch";
-const useFilter = (filterString: string, data: DataFetchType[]) => {
-  if (filterString === "name_desc") {
-    const temp = data.slice().sort((a, b) => {
-      const nameA = a.name.toUpperCase();
-      const nameB = b.name.toUpperCase();
-      if (nameA < nameB) {
-        return -1;
-      }
-      if (nameA > nameB) {
-        return 1;
-      }
-
-      return 0;
-    });
-    return temp;
-  } else if (filterString === "name_asc") {
-    const temp = data
+const useFilter = (
+  filterString: string,
+  data: DataFetchType[],
+  typePokemon?: string[],
+  keyword?: string
+) => {
+  if (filterString === "name_desc" && typePokemon !== undefined) {
+    let temp = data
       .slice()
       .sort((a, b) => {
         const nameA = a.name.toUpperCase();
@@ -29,7 +20,47 @@ const useFilter = (filterString: string, data: DataFetchType[]) => {
 
         return 0;
       })
+      .filter((item) => {
+        if (typePokemon.length === 0) {
+          return true;
+        }
+
+        return Array.isArray(item.types) && typePokemon.includes(item.types[0]);
+      });
+    if (keyword) {
+      temp = temp.filter((item) => {
+        return item.name.toLowerCase().includes(keyword!.toLowerCase());
+      });
+    }
+    return temp;
+  } else if (filterString === "name_asc" && typePokemon !== undefined) {
+    let temp = data
+      .slice()
+      .sort((a, b) => {
+        const nameA = a.name.toUpperCase();
+        const nameB = b.name.toUpperCase();
+        if (nameA < nameB) {
+          return -1;
+        }
+        if (nameA > nameB) {
+          return 1;
+        }
+
+        return 0;
+      })
+      .filter((item) => {
+        if (typePokemon.length === 0) {
+          return true;
+        }
+
+        return Array.isArray(item.types) && typePokemon.includes(item.types[0]);
+      })
       .reverse();
+    if (keyword) {
+      temp = temp.filter((item) => {
+        return item.name.toLowerCase().includes(keyword!.toLowerCase());
+      });
+    }
     return temp;
   } else if (filterString === "date_desc") {
     const temp = data.slice().sort((a, b) => {
@@ -48,6 +79,21 @@ const useFilter = (filterString: string, data: DataFetchType[]) => {
         );
       })
       .reverse();
+    return temp;
+  } else if (filterString === "no_filter" && typePokemon !== undefined) {
+    let temp = data.slice().filter((item) => {
+      if (typePokemon.length === 0) {
+        return true;
+      }
+
+      return Array.isArray(item.types) && typePokemon.includes(item.types[0]);
+    });
+    if (keyword) {
+      temp = temp.filter((item) => {
+        return item.name.toLowerCase().includes(keyword!.toLowerCase());
+      });
+    }
+
     return temp;
   } else return [];
 };

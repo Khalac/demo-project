@@ -13,8 +13,8 @@ export const useFetch = ({
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState<string>();
   const [data, setData] = useState<DataFetchType[]>([]);
-  const field = type === "cards" ? "image" : "logo";
-  const extraField =
+  const field = type === "cards" || type === "card" ? "image" : "logo";
+  const extraFieldQuery =
     type === "set"
       ? `
     releaseDate
@@ -25,29 +25,59 @@ export const useFetch = ({
       name
       id
     }`
+      : type === "card"
+      ? `
+    attacks {
+      cost
+      damage
+      effect
+      name
+    }
+    category
+    hp
+    rarity
+    effect
+    trainerType
+    types
+    energyType
+    set {
+      name
+    }
+  `
+      : "";
+  const extraFieldSearch =
+    type === "sets"
+      ? `
+    releaseDate
+    `
+      : type === "cards"
+      ? `
+      types
+      `
       : "";
   const filter =
-    type === "cards"
+    type === "cards" || type === "card"
       ? "CardsFilters"
-      : type === "series"
-      ? "SerieFilters"
-      : "SetFilters";
+      : type === "sets" || type === "set"
+      ? "SetFilters"
+      : "SerieFilters";
   const search = `
     query Search ($filters: ${filter}) {
       ${type} (filters: $filters) {
         name
         ${field}
         id
+         ${extraFieldSearch}
       }
     }
   `;
   const queryDetail = `
-  query Query ($filters: SetFilters) {
+  query Query ($filters:  ${filter}) {
   ${type} (filters: $filters){
     ${field}
     id
     name
-    ${extraField}
+    ${extraFieldQuery}
   }
 }`;
 
@@ -67,10 +97,11 @@ export const useFetch = ({
           signal: controller.signal,
         }
       );
+
       type === "set"
         ? setData([data.data.data.set])
         : type === "card"
-        ? setData(data.data.data.card)
+        ? setData([data.data.data.card])
         : type === "cards"
         ? setData(data.data.data.cards)
         : type === "series"

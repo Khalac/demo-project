@@ -1,20 +1,44 @@
 .header {
   display: flex;
-  width: 100%;
-  justify-content: center;
   align-items: center;
-  padding: 10px 0;
-  height: 10vh;
-  .header_nav {
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 20px;
-    color: #898989;
-    cursor: pointer;
-    padding: 20px;
+  padding: 10px 20px;
+  gap: 20px;
+
+  &__welcome {
+    font-size: 15px;
+    color: #9a8303;
+    font-family: 'Press Start 2P', cursive;
+    display: flex;
+    align-items: center;
   }
-  .active {
-    background-color: #4dad5b;
+
+  &__nav {
+    text-decoration: none;
+    padding: 10px 20px;
+    color: black;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 10px;
+    cursor: pointer;
+    &--active {
+      background-color: #ff3d3d;
+      color: white;
+    }
+  }
+
+  &__logout {
+    padding: 10px 20px;
+    background-color: #ff3d3d;
     color: white;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 10px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #cc0000;
+    }
   }
 }

@@ -1,13 +1,12 @@
-import "./SignupPage.scss";
-import SignUpForm from "@/components/authentication/SignUpForm/SignUpForm";
+import './SignupPage.scss'
+import SignUpForm from '@/components/authentication/SignUpForm/SignUpForm'
+
 const SignupPage = () => {
   return (
-    <div>
-      <div className="signuppage">
-        <SignUpForm />
-      </div>
+    <div className="signup-page">
+      <SignUpForm />
     </div>
-  );
-};
+  )
+}
 
-export default SignupPage;
+export default SignupPage

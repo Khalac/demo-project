@@ -1,10 +1,20 @@
-import { Outlet, Navigate } from "react-router-dom";
-import { IsLoginedContext } from "@/context/IsLogined";
-import { useContext } from "react";
+import { Outlet, Navigate } from 'react-router-dom'
+import { AuthContext } from '@/context/AuthContext'
+import { useContext } from 'react'
 
-const ProtectedRoutes = () => {
-  const { isLogin } = useContext(IsLoginedContext);
-  return isLogin ? <Outlet /> : <Navigate to="/login" />;
-};
+export const ProtectedRoutes = () => {
+  const { currentUser } = useContext(AuthContext)
+  if (!currentUser) {
+    return <Navigate to="/login" />
+  }
+  return <Outlet />
+}
 
-export default ProtectedRoutes;
+export const AuthRoutes = () => {
+  const { currentUser } = useContext(AuthContext)
+
+  if (currentUser) {
+    return <Navigate to="/" />
+  }
+  return <Outlet />
+}
