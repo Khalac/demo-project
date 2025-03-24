@@ -10,6 +10,7 @@ type SearchResultProps = {
   type: string;
   itemPerPage: number;
   dataFilter: DataFetchType[];
+  isLikedCardPage?: boolean;
 };
 const SearchResult = ({
   data,
@@ -19,6 +20,7 @@ const SearchResult = ({
   type,
   itemPerPage,
   dataFilter,
+  isLikedCardPage,
 }: SearchResultProps) => {
   const navigate = useNavigate();
   const handleItemClick = (id: string) => {
@@ -28,11 +30,15 @@ const SearchResult = ({
       navigate(`/card/${id}`);
     } else return;
   };
-  const dataRender = dataFilter.length === 0 ? data : dataFilter;
+  const dataRender =
+    dataFilter.length === 0 && !isLikedCardPage ? data : dataFilter;
   return (
     <div className="search-result">
       {loading && <span className="search-result__loading">Loading...</span>}
-      {!err && !loading && data.length === 0 && (
+      {!err && !loading && data.length === 0 && !isLikedCardPage && (
+        <span className="search-result__empty">No data found</span>
+      )}
+      {!err && !loading && isLikedCardPage && dataRender.length === 0 && (
         <span className="search-result__empty">No data found</span>
       )}
 

@@ -20,7 +20,6 @@ const Cards = () => {
 
   const ITEMPERPAGE = 5;
   const dataFilter = useFilter(select, data, typePokemon);
-
   return (
     <div className="cards">
       <Filter
@@ -38,8 +37,9 @@ const Cards = () => {
         page={page}
         itemPerPage={ITEMPERPAGE}
         dataFilter={dataFilter}
+        isLikedCardPage={true}
       />
-      {!loading && (
+      {!loading && dataFilter.length !== 0 && (
         <Pagination
           data={data}
           itemPerPage={ITEMPERPAGE}

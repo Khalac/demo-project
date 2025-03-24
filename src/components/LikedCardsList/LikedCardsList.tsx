@@ -32,13 +32,16 @@ const LikedCardsList = () => {
         page={page}
         itemPerPage={ITEMPERPAGE}
         dataFilter={dataFilter}
+        isLikedCardPage={true}
       />
-      <Pagination
-        data={user.likedCards}
-        itemPerPage={ITEMPERPAGE}
-        page={page}
-        setPage={setPage}
-      />
+      {dataFilter.length > 0 && (
+        <Pagination
+          data={user.likedCards}
+          itemPerPage={ITEMPERPAGE}
+          page={page}
+          setPage={setPage}
+        />
+      )}
     </div>
   );
 };
