@@ -5,7 +5,7 @@ const useFilter = (
   typePokemon?: string[],
   keyword?: string
 ) => {
-  if (filterString === "name_desc" && typePokemon !== undefined) {
+  if (filterString === "name_desc") {
     let temp = data
       .slice()
       .sort((a, b) => {
@@ -21,6 +21,7 @@ const useFilter = (
         return 0;
       })
       .filter((item) => {
+        if (typePokemon === undefined) return true;
         if (typePokemon.length === 0) {
           return true;
         }
@@ -33,7 +34,7 @@ const useFilter = (
       });
     }
     return temp;
-  } else if (filterString === "name_asc" && typePokemon !== undefined) {
+  } else if (filterString === "name_asc") {
     let temp = data
       .slice()
       .sort((a, b) => {
@@ -49,6 +50,7 @@ const useFilter = (
         return 0;
       })
       .filter((item) => {
+        if (typePokemon === undefined) return true;
         if (typePokemon.length === 0) {
           return true;
         }
@@ -80,8 +82,9 @@ const useFilter = (
       })
       .reverse();
     return temp;
-  } else if (filterString === "no_filter" && typePokemon !== undefined) {
+  } else if (filterString === "no_filter") {
     let temp = data.slice().filter((item) => {
+      if (typePokemon === undefined) return true;
       if (typePokemon.length === 0) {
         return true;
       }

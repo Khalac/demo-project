@@ -1,37 +1,33 @@
-import { useParams } from 'react-router-dom'
-import { useState } from 'react'
-import { useFetch } from '@/hooks/useFetch'
-import './CardInformation.scss'
-import { useDispatch, useSelector } from 'react-redux'
-import { addLikedCard, unlikedCard } from '@/redux/slice/likedCardSlice'
+import { useParams } from "react-router-dom";
+import { useFetch } from "@/hooks/useFetch";
+import "./CardInformation.scss";
+import { useDispatch, useSelector } from "react-redux";
+import { addLikedCard, unlikedCard } from "@/redux/slice/likedCardSlice";
 
 type LikedCardType = {
-  id: string
-  name: string
-  image: string
-  types: string[]
-}
+  id: string;
+  name: string;
+  image: string;
+  types: string[];
+};
 
 const CardInformation = () => {
-  const { id } = useParams()
-  const { data, loading, err } = useFetch({ type: 'card', id: id })
-  const { user } = useSelector((state: any) => state.user)
+  const { id } = useParams();
+  const { data, loading, err } = useFetch({ type: "card", id: id });
+  const { user } = useSelector((state: any) => state.user);
 
-  const [liked, setLiked] = useState(
-    user.likedCards.some((a: any) => {
-      return a.id === id
-    })
-  )
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const handleLike = (card: LikedCardType) => {
-    if (liked) {
-      setLiked(false)
-      dispatch(unlikedCard(card))
+    if (
+      user.likedCards.some((a: any) => {
+        return a.id === id;
+      })
+    ) {
+      dispatch(unlikedCard(card));
     } else {
-      setLiked(true)
-      dispatch(addLikedCard(card))
+      dispatch(addLikedCard(card));
     }
-  }
+  };
   return (
     <div className="card-info">
       {loading && <div className="card-info__loading">Loading ... </div>}
@@ -58,13 +54,13 @@ const CardInformation = () => {
                 <span className="card-info__label">Rarity:</span>
                 <span className="card-info__value">{d.rarity}</span>
               </div>
-              {d.category === 'Energy' && (
+              {d.category === "Energy" && (
                 <div className="card-info__detail">
                   <span className="card-info__label">Energy Type:</span>
                   <span className="card-info__value">{d.energyType}</span>
                 </div>
               )}
-              {d.category === 'Trainer' && (
+              {d.category === "Trainer" && (
                 <div className="card-info__section">
                   <div className="card-info__detail">
                     <span className="card-info__label">Trainer Type:</span>
@@ -76,7 +72,7 @@ const CardInformation = () => {
                   </div>
                 </div>
               )}
-              {d.category === 'Pokemon' && (
+              {d.category === "Pokemon" && (
                 <div className="card-info__section">
                   <div className="card-info__detail">
                     <span className="card-info__label">HP:</span>
@@ -125,7 +121,11 @@ const CardInformation = () => {
               )}
               <button
                 className={`card-info__button ${
-                  liked ? 'card-info__button--liked' : ''
+                  user.likedCards.some((a: any) => {
+                    return a.id === id;
+                  })
+                    ? "card-info__button--liked"
+                    : ""
                 }`}
                 onClick={() =>
                   handleLike({
@@ -136,15 +136,19 @@ const CardInformation = () => {
                   })
                 }
               >
-                {liked ? 'Liked' : 'Like'}
+                {user.likedCards.some((a: any) => {
+                  return a.id === id;
+                })
+                  ? "Liked"
+                  : "Like"}
               </button>
             </div>
           </div>
-        )
+        );
       })}
       {err && <div className="card-info__error">{err}</div>}
     </div>
-  )
-}
+  );
+};
 
-export default CardInformation
+export default CardInformation;

@@ -1,16 +1,16 @@
-import { HEADERNAVIGATE } from '@/constants/HeaderNav'
-import { NavLink } from 'react-router-dom'
-import './Header.scss'
-import { useContext } from 'react'
-import { AuthContext } from '@/context/AuthContext'
-import { useNavigate } from 'react-router-dom'
+import { HEADERNAVIGATE } from "@/constants/HeaderNav";
+import { NavLink } from "react-router-dom";
+import "./Header.scss";
+import { useContext } from "react";
+import { AuthContext } from "@/context/AuthContext";
+import { useNavigate } from "react-router-dom";
 const Header = () => {
-  const { Logout, currentUser } = useContext(AuthContext)
-  const navigate = useNavigate()
+  const { logout, currentUser } = useContext(AuthContext);
+  const navigate = useNavigate();
   const handleLogout = () => {
-    Logout()
-    navigate('/login')
-  }
+    logout();
+    navigate("/login");
+  };
   return (
     <header className="header">
       <div className="header__welcome">Welcome, {currentUser.email}!</div>
@@ -20,18 +20,18 @@ const Header = () => {
             to={e.path}
             key={e.id}
             className={({ isActive }) =>
-              isActive ? 'header__nav header__nav--active' : 'header__nav'
+              isActive ? "header__nav header__nav--active" : "header__nav"
             }
           >
             {e.name}
           </NavLink>
-        )
+        );
       })}
       <button className="header__logout" onClick={handleLogout}>
         Log Out
       </button>
     </header>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

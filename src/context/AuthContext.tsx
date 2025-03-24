@@ -4,7 +4,7 @@ import { SignUpSchema } from "@/schema/signup.schema";
 import { LoginSchema } from "@/schema/login.schema";
 import { z } from "zod";
 import { useDispatch } from "react-redux";
-import { login, logout } from "@/redux/slice/likedCardSlice";
+import { loginAction, logoutAction } from "@/redux/slice/likedCardSlice";
 type LoginType = z.infer<typeof LoginSchema>;
 type SignUpType = z.infer<typeof SignUpSchema>;
 
@@ -30,12 +30,12 @@ export const AuthContext = createContext({
     likedCards: [],
     types: [],
   } as UserType,
-  Login: (data: LoginType): boolean => {
+  login: (data: LoginType): boolean => {
     console.log(data);
     return false;
   },
-  Logout: () => {},
-  SignUp: (data: SignUpType): boolean => {
+  logout: () => {},
+  signUp: (data: SignUpType): boolean => {
     console.log(data);
     return false;
   },
@@ -54,7 +54,7 @@ const AuthProvider = ({ children }: { children: ReactNode }): ReactNode => {
     window.addEventListener("storage", handleStorageChange);
     return () => window.removeEventListener("storage", handleStorageChange);
   }, []);
-  const SignUp = (data: SignUpType) => {
+  const signUp = (data: SignUpType) => {
     const users = JSON.parse(localStorage.getItem("users") || "[]");
 
     if (users.some((a: SignUpType) => a.email === data.email)) {
@@ -69,28 +69,27 @@ const AuthProvider = ({ children }: { children: ReactNode }): ReactNode => {
     localStorage.setItem("users", JSON.stringify(users));
     return true;
   };
-  const Login = (data: LoginType) => {
+  const login = (data: LoginType) => {
     const users = JSON.parse(localStorage.getItem("users") || "[]");
     const user = users.find((a: LoginType) => {
       return a.email === data.email && a.password === data.password;
     });
 
     if (user) {
-      dispatch(login(user));
+      dispatch(loginAction(user));
       setCurrentUser(user);
       localStorage.setItem("currentUser", JSON.stringify(user));
       return true;
     }
     return false;
   };
-  const Logout = () => {
-    dispatch(logout());
-
+  const logout = () => {
+    dispatch(logoutAction());
     setCurrentUser(null);
     localStorage.removeItem("currentUser");
   };
   return (
-    <AuthContext.Provider value={{ currentUser, Login, Logout, SignUp }}>
+    <AuthContext.Provider value={{ currentUser, login, logout, signUp }}>
       {children}
     </AuthContext.Provider>
   );
