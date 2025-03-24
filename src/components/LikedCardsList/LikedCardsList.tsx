@@ -1,21 +1,20 @@
-import { useFetch } from '@/hooks/useFetch'
-import { useState } from 'react'
-import Pagination from '../ui/Pagination/Pagination'
-import SearchResult from '@/components/ui/SearchResult/SearchResult'
-import useFilter from '@/hooks/useFilter'
-import useDebounce from '@/hooks/useDebounce'
-import { POKEMONTYPES } from '@/constants/PokemonTypes'
-import { useSelector } from 'react-redux'
-import './LikedCardsList.scss'
+import { useState } from "react";
+import Pagination from "../ui/Pagination/Pagination";
+import SearchResult from "@/components/ui/SearchResult/SearchResult";
+import useFilter from "@/hooks/useFilter";
+import useDebounce from "@/hooks/useDebounce";
+import { POKEMONTYPES } from "@/constants/PokemonTypes";
+import { useSelector } from "react-redux";
+import "./LikedCardsList.scss";
 const LikedCardsList = () => {
-  const { user } = useSelector((state: any) => state.user)
-  const [input, setInput] = useState('')
-  const [select, setSelect] = useState('no_filter')
-  const [typePokemon, setTypePokemon] = useState<string[]>([])
-  const keyword = useDebounce(input, 1000)
-  const [page, setPage] = useState(1)
-  const ITEMPERPAGE = 6
-  const dataFilter = useFilter(select, user.likedCards, typePokemon, keyword)
+  const { user } = useSelector((state: any) => state.user);
+  const [input, setInput] = useState("");
+  const [select, setSelect] = useState("no_filter");
+  const [typePokemon, setTypePokemon] = useState<string[]>([]);
+  const keyword = useDebounce(input, 1000);
+  const [page, setPage] = useState(1);
+  const ITEMPERPAGE = 6;
+  const dataFilter = useFilter(select, user.likedCards, typePokemon, keyword);
   return (
     <div className="liked-cards-list">
       <div className="liked-cards-list__search">
@@ -50,9 +49,9 @@ const LikedCardsList = () => {
                     if (typePokemon.includes(e.target.value)) {
                       setTypePokemon(
                         typePokemon.filter((type) => type !== e.target.value)
-                      )
+                      );
                     } else {
-                      setTypePokemon([...typePokemon, e.target.value])
+                      setTypePokemon([...typePokemon, e.target.value]);
                     }
                   }}
                 />
@@ -65,8 +64,8 @@ const LikedCardsList = () => {
       <SearchResult
         data={user.likedCards}
         loading={false}
-        err={''}
-        type={'cards'}
+        err={""}
+        type={"cards"}
         page={page}
         itemPerPage={ITEMPERPAGE}
         dataFilter={dataFilter}
@@ -78,7 +77,7 @@ const LikedCardsList = () => {
         setPage={setPage}
       />
     </div>
-  )
-}
+  );
+};
 
-export default LikedCardsList
+export default LikedCardsList;
