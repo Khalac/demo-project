@@ -43,12 +43,19 @@ export const AuthContext = createContext({
 
 const AuthProvider = ({ children }: { children: ReactNode }): ReactNode => {
   const dispatch = useDispatch();
+
   const [currentUser, setCurrentUser] = useState(
     JSON.parse(localStorage.getItem("currentUser") || "null")
   );
   useEffect(() => {
     const handleStorageChange = () => {
-      setCurrentUser(JSON.parse(localStorage.getItem("currentUser") || "null"));
+      const getUser = JSON.parse(localStorage.getItem("currentUser") || "null");
+      setCurrentUser(getUser);
+      if (getUser) {
+        dispatch(loginAction(getUser));
+      } else {
+        dispatch(logoutAction());
+      }
     };
 
     window.addEventListener("storage", handleStorageChange);
