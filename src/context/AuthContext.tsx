@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import { SignUpSchema } from "@/schema/signup.schema";
 import { LoginSchema } from "@/schema/login.schema";
 import { z } from "zod";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { loginAction, logoutAction } from "@/redux/slice/likedCardSlice";
 type LoginType = z.infer<typeof LoginSchema>;
 type SignUpType = z.infer<typeof SignUpSchema>;
