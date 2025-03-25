@@ -1,6 +1,6 @@
 import { useFetch } from "@/hooks/useFetch";
 import { useState } from "react";
-import Pagination from "../../ui/Pagination/Pagination";
+import Pagination from "../ui/Pagination/Pagination";
 import SearchResult from "@/components/ui/SearchResult/SearchResult";
 import useFilter from "@/hooks/useFilter";
 import useDebounce from "@/hooks/useDebounce";
