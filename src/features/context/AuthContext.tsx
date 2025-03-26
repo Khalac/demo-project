@@ -1,10 +1,13 @@
 import { createContext, useEffect, useState } from "react";
 import type { ReactNode } from "react";
-import { SignUpSchema } from "@/schema/signup.schema";
-import { LoginSchema } from "@/schema/login.schema";
+import { SignUpSchema } from "@/features/Signup/model/signup.schema";
+import { LoginSchema } from "@/features/Login/model/login.schema";
 import { z } from "zod";
 import { useDispatch } from "react-redux";
-import { loginAction, logoutAction } from "@/redux/slice/likedCardSlice";
+import {
+  loginAction,
+  logoutAction,
+} from "@/features/redux/slice/likedCardSlice";
 type LoginType = z.infer<typeof LoginSchema>;
 type SignUpType = z.infer<typeof SignUpSchema>;
 

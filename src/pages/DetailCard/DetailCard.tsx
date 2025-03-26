@@ -1,14 +1,13 @@
-import Header from '@/components/Header/Header'
-import './DetailCard.scss'
-import CardInformation from '@/components/CardInformation/CardInformation'
+import "./DetailCard.scss";
+import CardInformation from "@/components/CardInformation/CardInformation";
+import MainLayout from "@/layout/MainLayout";
 
 const DetailCar = () => {
   return (
-    <div className="detail-card">
-      <Header />
+    <MainLayout>
       <CardInformation />
-    </div>
-  )
-}
+    </MainLayout>
+  );
+};
 
-export default DetailCar
+export default DetailCar;

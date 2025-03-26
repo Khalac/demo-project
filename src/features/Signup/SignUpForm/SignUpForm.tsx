@@ -1,9 +1,9 @@
 import { z } from "zod";
-import { SignUpSchema } from "@/schema/signup.schema";
+import { SignUpSchema } from "@/features/Signup/model/signup.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
 import "./SignUpForm.scss";
-import { AuthContext } from "@/context/AuthContext";
+import { AuthContext } from "@/features/context/AuthContext";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 

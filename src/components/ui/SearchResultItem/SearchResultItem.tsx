@@ -1,17 +1,21 @@
 import { DataFetchType } from "@/types/dataFetch";
 import "./SearchResultItem.scss";
+import { useNavigate } from "react-router-dom";
 
 type SearchResultListProps = {
   data: DataFetchType;
   type: string;
-  handleItemClick: (a: string) => void;
 };
 
-const SearchResultList = ({
-  data,
-  type,
-  handleItemClick,
-}: SearchResultListProps) => {
+const SearchResultList = ({ data, type }: SearchResultListProps) => {
+  const navigate = useNavigate();
+  const handleItemClick = (id: string) => {
+    if (type === "sets") {
+      navigate(`/set/${id}`);
+    } else if (type === "cards") {
+      navigate(`/card/${id}`);
+    } else return;
+  };
   return (
     <li
       className={

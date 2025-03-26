@@ -1,12 +1,12 @@
-import './LoginPage.scss'
-import LogInForm from '@/components/authentication/LogInForm/LogInForm'
+import "./LoginPage.scss";
+import LogInForm from "@/features/Login/LogInForm/LogInForm";
 
 const LoginPage = () => {
   return (
     <div className="login-page">
       <LogInForm />
     </div>
-  )
-}
+  );
+};
 
-export default LoginPage
+export default LoginPage;

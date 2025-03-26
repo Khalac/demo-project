@@ -2,7 +2,10 @@ import { useParams } from "react-router-dom";
 import { useFetch } from "@/hooks/useFetch";
 import "./CardInformation.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { addLikedCard, unlikedCard } from "@/redux/slice/likedCardSlice";
+import {
+  addLikedCard,
+  unlikedCard,
+} from "@/features/redux/slice/likedCardSlice";
 
 type LikedCardType = {
   id: string;

@@ -1,10 +1,10 @@
-import { LoginSchema } from "@/schema/login.schema";
+import { LoginSchema } from "@/features/Login/model/login.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
 
 import { z } from "zod";
 import { useContext, useState } from "react";
-import { AuthContext } from "@/context/AuthContext";
+import { AuthContext } from "@/features/context/AuthContext";
 import "./LogInForm.scss";
 import { useNavigate } from "react-router-dom";
 

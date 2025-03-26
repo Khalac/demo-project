@@ -1,5 +1,5 @@
 import "./SearchResult.scss";
-import { useNavigate } from "react-router-dom";
+
 import { DataFetchType } from "@/types/dataFetch";
 import SearchResultList from "../SearchResultItem/SearchResultItem";
 type SearchResultProps = {
@@ -22,14 +22,8 @@ const SearchResult = ({
   dataFilter,
   isLikedCardPage,
 }: SearchResultProps) => {
-  const navigate = useNavigate();
-  const handleItemClick = (id: string) => {
-    if (type === "sets") {
-      navigate(`/set/${id}`);
-    } else if (type === "cards") {
-      navigate(`/card/${id}`);
-    } else return;
-  };
+
+
   const dataRender =
     dataFilter.length === 0 && !isLikedCardPage ? data : dataFilter;
   return (
@@ -47,13 +41,7 @@ const SearchResult = ({
           dataRender
             .slice((page - 1) * itemPerPage, page * itemPerPage)
             .map((d) => {
-              return (
-                <SearchResultList
-                  data={d}
-                  type={type}
-                  handleItemClick={handleItemClick}
-                />
-              );
+              return <SearchResultList data={d} type={type} />;
             })}
       </ul>
       {err && <span className="search-result__error">{err}</span>}

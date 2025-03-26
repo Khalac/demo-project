@@ -1,5 +1,5 @@
 import "./Filter.scss";
-import { POKEMONTYPES } from "@/constants/PokemonTypes";
+import { POKEMONTYPES } from "@/components/Header/constants/PokemonTypes";
 type FilterProps = {
   setInput: React.Dispatch<React.SetStateAction<string>>;
   setSelect: React.Dispatch<React.SetStateAction<string>>;
