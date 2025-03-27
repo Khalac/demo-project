@@ -1,0 +1,1 @@
+export const Query = `query Query ( $filters : CardsFilters ) { card ( filters : $filters)  { id name image  attacks { cost damage effect name } category hp rarity effect trainerType types energyType set { name } } }`;

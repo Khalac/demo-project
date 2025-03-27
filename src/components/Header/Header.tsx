@@ -1,8 +1,8 @@
-import { HEADERNAVIGATE } from "@/constants/HeaderNav";
+import { HEADERNAVIGATE } from "./constants/HeaderNav";
 import { NavLink } from "react-router-dom";
 import "./Header.scss";
 import { useContext } from "react";
-import { AuthContext } from "@/context/AuthContext";
+import { AuthContext } from "@/features/context/AuthContext";
 import { useNavigate } from "react-router-dom";
 const Header = () => {
   const { logout, currentUser } = useContext(AuthContext);

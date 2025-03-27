@@ -1,13 +1,12 @@
-import Cards from '@/components/Cards/Cards'
-import Header from '@/components/Header/Header'
-import './CardsPage.scss'
+import Cards from "@/components/Cards/Cards";
+import "./CardsPage.scss";
+import MainLayout from "@/layout/MainLayout";
 const CardsPage = () => {
   return (
-    <div className="cards-page">
-      <Header />
+    <MainLayout>
       <Cards />
-    </div>
-  )
-}
+    </MainLayout>
+  );
+};
 
-export default CardsPage
+export default CardsPage;

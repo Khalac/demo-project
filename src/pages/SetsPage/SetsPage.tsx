@@ -1,14 +1,13 @@
-import Header from '@/components/Header/Header'
-import './SetsPage.scss'
-import DisplaySets from '@/components/Sets/DisplaySets'
+import "./SetsPage.scss";
+import DisplaySets from "@/components/Sets/DisplaySets";
+import MainLayout from "@/layout/MainLayout";
 
 const SetsPage = () => {
   return (
-    <div className="sets-page">
-      <Header />
+    <MainLayout>
       <DisplaySets />
-    </div>
-  )
-}
+    </MainLayout>
+  );
+};
 
-export default SetsPage
+export default SetsPage;

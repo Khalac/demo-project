@@ -1,38 +1,37 @@
-import { useFetch } from "@/hooks/useFetch";
+import { fetchDataSets } from "@/features/sets";
 import { useState } from "react";
-import Pagination from "../ui/Pagination/Pagination";
-import SearchResult from "@/components/ui/SearchResult/SearchResult";
+import { Filter, Pagination, SearchResult } from "../ui";
 import useFilter from "@/hooks/useFilter";
-
 import "./DisplaySets.scss";
 import useDebounce from "@/hooks/useDebounce";
-import Filter from "../ui/Filter/Filter";
+import ShowLoadingErr from "../ui/ShowLoadingError/ShowLoadingErr";
 
 const DisplaySets = () => {
   const [input, setInput] = useState("");
   const [select, setSelect] = useState("no_filter");
   const keyword = useDebounce(input, 1000);
-  const { data, loading, err } = useFetch(
-    keyword ? { keyword: keyword, type: "sets" } : { type: "sets" }
-  );
+  const { data, loading, err } = fetchDataSets(keyword);
 
   const [page, setPage] = useState(1);
   const ITEMPERPAGE = 5;
-  const dataFilter = useFilter(select, data);
+  const dataFilter = data && useFilter(select, data);
 
   return (
     <div className="sets">
       <Filter setInput={setInput} setSelect={setSelect} page="Set" />
-      <SearchResult
-        data={data}
-        loading={loading}
-        err={err!}
-        type={"sets"}
-        page={page}
-        itemPerPage={ITEMPERPAGE}
-        dataFilter={dataFilter}
-      />
-      {!loading && (
+      {data && dataFilter && (
+        <SearchResult
+          data={data}
+          loading={loading}
+          err={err!}
+          type={"sets"}
+          page={page}
+          itemPerPage={ITEMPERPAGE}
+          dataFilter={dataFilter}
+        />
+      )}
+      <ShowLoadingErr loading={loading} err={err} />
+      {!loading && data && (
         <Pagination
           data={data}
           itemPerPage={ITEMPERPAGE}

@@ -1,13 +1,12 @@
-import Header from '@/components/Header/Header'
-import LikedCardsList from '@/components/LikedCardsList/LikedCardsList'
-import './LikeCardsPage.scss'
+import LikedCardsList from "@/components/LikedCardsList/LikedCardsList";
+import "./LikeCardsPage.scss";
+import MainLayout from "@/layout/MainLayout";
 const LikeCardsPage = () => {
   return (
-    <div className="like-cards-page">
-      <Header />
+    <MainLayout>
       <LikedCardsList />
-    </div>
-  )
-}
+    </MainLayout>
+  );
+};
 
-export default LikeCardsPage
+export default LikeCardsPage;

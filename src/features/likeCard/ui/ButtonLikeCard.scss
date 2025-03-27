@@ -1,0 +1,24 @@
+.card-info__button {
+  margin-top: 10px;
+  padding: 12px 24px;
+  background: #4dad5b;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+
+  &:hover {
+    background: #45b649;
+  }
+
+  &--liked {
+    background: #2d3748;
+
+    &:hover {
+      background: #4a5568;
+      box-shadow: 0 4px 6px rgba(45, 55, 72, 0.2);
+    }
+  }
+}

@@ -97,7 +97,6 @@ export const useFetch = ({
           signal: controller.signal,
         }
       );
-
       type === "set"
         ? setData([data.data.data.set])
         : type === "card"

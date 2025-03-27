@@ -1,14 +1,13 @@
-import AllSeries from '@/components/Series/AllSeries/AllSeries'
-import Header from '@/components/Header/Header'
-import './SeriesPage.scss'
+import AllSeries from "@/components/Series/AllSeries";
+import "./SeriesPage.scss";
+import MainLayout from "@/layout/MainLayout";
 
 const SeriesPage = () => {
   return (
-    <div className="series-page">
-      <Header />
+    <MainLayout>
       <AllSeries />
-    </div>
-  )
-}
+    </MainLayout>
+  );
+};
 
-export default SeriesPage
+export default SeriesPage;
