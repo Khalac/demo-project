@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { SignUpSchema } from "@/features/Signup/model/signup.schema";
+import { SignUpSchema } from "@/features/signup/model/signup.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
 import "./SignUpForm.scss";

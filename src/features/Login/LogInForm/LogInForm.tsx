@@ -1,4 +1,4 @@
-import { LoginSchema } from "@/features/Login/model/login.schema";
+import { LoginSchema } from "@/features/login/model/login.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
 

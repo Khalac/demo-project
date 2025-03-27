@@ -1,25 +1,22 @@
-import { useFetch } from "@/hooks/useFetch";
+import { fetchCards } from "@/features/cards";
 import { useState } from "react";
-import Pagination from "../ui/Pagination/Pagination";
-import SearchResult from "@/components/ui/SearchResult/SearchResult";
 import useFilter from "@/hooks/useFilter";
 import "./Cards.scss";
 import useDebounce from "@/hooks/useDebounce";
-
-import Filter from "../ui/Filter/Filter";
+import { Filter, Pagination, SearchResult } from "../ui";
+import ShowLoadingErr from "../ui/ShowLoadingError/ShowLoadingErr";
 
 const Cards = () => {
   const [input, setInput] = useState("");
   const [select, setSelect] = useState("no_filter");
   const [typePokemon, setTypePokemon] = useState<string[]>([]);
-  const keyword = useDebounce(input, 1000);
-  const { data, loading, err } = useFetch(
-    keyword ? { keyword: keyword, type: "cards" } : { type: "cards" }
-  );
+  const keyword = useDebounce(input, 2000);
+  const { data, loading, err } = fetchCards(keyword);
   const [page, setPage] = useState(1);
 
   const ITEMPERPAGE = 5;
-  const dataFilter = useFilter(select, data, typePokemon);
+  const dataFilter = data && useFilter(select, data, typePokemon);
+
   return (
     <div className="cards">
       <Filter
@@ -29,17 +26,20 @@ const Cards = () => {
         typePokemon={typePokemon}
         page="Card"
       />
-      <SearchResult
-        data={data}
-        loading={loading}
-        err={err!}
-        type={"cards"}
-        page={page}
-        itemPerPage={ITEMPERPAGE}
-        dataFilter={dataFilter}
-        isLikedCardPage={true}
-      />
-      {!loading && dataFilter.length !== 0 && (
+      {data && dataFilter && (
+        <SearchResult
+          data={data}
+          loading={loading}
+          err={err!}
+          type={"cards"}
+          page={page}
+          itemPerPage={ITEMPERPAGE}
+          dataFilter={dataFilter}
+          isLikedCardPage={true}
+        />
+      )}
+      <ShowLoadingErr loading={loading} err={err} />
+      {!loading && data && dataFilter && dataFilter.length !== 0 && (
         <Pagination
           data={data}
           itemPerPage={ITEMPERPAGE}

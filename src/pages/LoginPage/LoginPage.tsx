@@ -1,5 +1,5 @@
 import "./LoginPage.scss";
-import LogInForm from "@/features/Login/LogInForm/LogInForm";
+import { LogInForm } from "@/features/login";
 
 const LoginPage = () => {
   return (

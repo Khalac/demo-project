@@ -1,0 +1,21 @@
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2rem;
+  color: #4dad5b;
+  font-weight: 600;
+  gap: 10px;
+  animation: pulse 1.5s infinite;
+}
+
+.error {
+  text-align: center;
+  color: #dc2626;
+  background: #fee2e2;
+  padding: 15px 20px;
+  border-radius: 12px;
+  font-weight: 500;
+  border: 1px solid #fecaca;
+  box-shadow: 0 2px 4px rgba(220, 38, 38, 0.1);
+}

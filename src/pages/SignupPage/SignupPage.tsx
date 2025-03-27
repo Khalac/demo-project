@@ -1,5 +1,5 @@
 import "./SignupPage.scss";
-import SignUpForm from "@/features/Signup/SignUpForm/SignUpForm";
+import { SignUpForm } from "@/features/signup";
 
 const SignupPage = () => {
   return (

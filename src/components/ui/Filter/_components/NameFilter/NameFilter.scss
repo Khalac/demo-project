@@ -1,0 +1,22 @@
+.filter-group {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  &__label {
+    font-size: 16px;
+    font-weight: 500;
+    color: #2d3748;
+  }
+
+  &__input {
+    padding: 8px 15px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    outline: none;
+    font-size: 14px;
+
+    &:focus {
+      border-color: #4dad5b;
+    }
+  }
+}

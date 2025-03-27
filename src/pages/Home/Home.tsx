@@ -1,5 +1,5 @@
 import "./Home.scss";
-import SearchInput from "@/components/Homepage/SearchInput";
+import SearchInput from "@/components/Homepage/Homepage";
 import MainLayout from "@/layout/MainLayout";
 
 const Home = () => {

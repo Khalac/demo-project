@@ -88,7 +88,6 @@ const useFilter = (
       if (typePokemon.length === 0) {
         return true;
       }
-
       return Array.isArray(item.types) && typePokemon.includes(item.types[0]);
     });
     if (keyword) {

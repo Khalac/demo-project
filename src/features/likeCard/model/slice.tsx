@@ -1,11 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-
-type LikedCardType = {
-  id: string;
-  name: string;
-  image: string;
-};
-
+import { LikedCardType } from "@/features/likeCard";
 const initialState = {
   user: JSON.parse(localStorage.getItem("currentUser") || "null"),
 };

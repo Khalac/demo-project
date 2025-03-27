@@ -1,7 +1,7 @@
 import "./SearchResult.scss";
 
 import { DataFetchType } from "@/types/dataFetch";
-import SearchResultList from "../SearchResultItem/SearchResultItem";
+import SearchResultList from "./SearchResultItem/SearchResultItem";
 type SearchResultProps = {
   data: DataFetchType[];
   loading: boolean;
@@ -22,13 +22,11 @@ const SearchResult = ({
   dataFilter,
   isLikedCardPage,
 }: SearchResultProps) => {
-
-
   const dataRender =
     dataFilter.length === 0 && !isLikedCardPage ? data : dataFilter;
   return (
     <div className="search-result">
-      {loading && <span className="search-result__loading">Loading...</span>}
+   
       {!err && !loading && data.length === 0 && !isLikedCardPage && (
         <span className="search-result__empty">No data found</span>
       )}
@@ -44,7 +42,7 @@ const SearchResult = ({
               return <SearchResultList data={d} type={type} />;
             })}
       </ul>
-      {err && <span className="search-result__error">{err}</span>}
+
     </div>
   );
 };
