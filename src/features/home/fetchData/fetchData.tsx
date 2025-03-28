@@ -1,8 +1,8 @@
-import { useFetch2 } from "@/hooks/useFetch2";
+import { useFetch } from "@/hooks/useFetch";
 import { Queries } from "../model/query";
 
 const fetchData = (keyword: string, type: string) => {
-  const { data, err, loading } = useFetch2(
+  const { data, err, loading } = useFetch(
     type === "series"
       ? Queries.SeriesQuery
       : type === "sets"
