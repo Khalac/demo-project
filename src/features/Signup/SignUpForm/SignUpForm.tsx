@@ -20,7 +20,7 @@ const SignUpForm = () => {
   } = useForm({
     resolver: zodResolver(SignUpSchema),
   });
-
+  console.log(errors);
   const onSubmit: SubmitHandler<SignUpSchema> = (data) => {
     if (signUp(data)) {
       navigate("/login");
