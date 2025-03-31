@@ -1,85 +1,19 @@
+import { DataFetchType } from "@/types/dataFetch";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { DataFetchType } from "@/types/dataFetch";
-export const useFetch = ({
-  type,
-  keyword,
-  id,
-}: {
-  type: string;
-  keyword?: string;
-  id?: string;
-}) => {
+
+export const useFetch = (
+  query: string,
+  variable: { name?: string; id?: string }
+) => {
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState<string>();
-  const [data, setData] = useState<DataFetchType[]>([]);
-  const field = type === "cards" || type === "card" ? "image" : "logo";
-  const extraFieldQuery =
-    type === "set"
-      ? `
-    releaseDate
-    cardCount {
-      total
-    }
-    serie {
-      name
-      id
-    }`
-      : type === "card"
-      ? `
-    attacks {
-      cost
-      damage
-      effect
-      name
-    }
-    category
-    hp
-    rarity
-    effect
-    trainerType
-    types
-    energyType
-    set {
-      name
-    }
-  `
-      : "";
-  const extraFieldSearch =
-    type === "sets"
-      ? `
-    releaseDate
-    `
-      : type === "cards"
-      ? `
-      types
-      `
-      : "";
-  const filter =
-    type === "cards" || type === "card"
-      ? "CardsFilters"
-      : type === "sets" || type === "set"
-      ? "SetFilters"
-      : "SerieFilters";
-  const search = `
-    query Search ($filters: ${filter}) {
-      ${type} (filters: $filters) {
-        name
-        ${field}
-        id
-         ${extraFieldSearch}
-      }
-    }
-  `;
-  const queryDetail = `
-  query Query ($filters:  ${filter}) {
-  ${type} (filters: $filters){
-    ${field}
-    id
-    name
-    ${extraFieldQuery}
-  }
-}`;
+  const [data, setData] = useState<{
+    series?: DataFetchType[];
+    cards?: DataFetchType[];
+    sets?: DataFetchType[];
+    card: DataFetchType;
+  }>();
 
   const fetchData = async (controller: AbortController) => {
     setLoading(true);
@@ -88,25 +22,15 @@ export const useFetch = ({
       const data = await axios.post(
         import.meta.env.VITE_API_KEY,
         {
-          query: id ? queryDetail : search,
-          variables: id
-            ? { filters: { id: id } }
-            : { filters: { name: keyword } },
+          query: query,
+          variables: { filters: variable },
         },
         {
           signal: controller.signal,
         }
       );
 
-      type === "set"
-        ? setData([data.data.data.set])
-        : type === "card"
-        ? setData([data.data.data.card])
-        : type === "cards"
-        ? setData(data.data.data.cards)
-        : type === "series"
-        ? setData(data.data.data.series)
-        : setData(data.data.data.sets);
+      setData(data.data.data);
     } catch (err) {
       if ((err as Error).name === "CanceledError") {
         return 0;
@@ -117,13 +41,12 @@ export const useFetch = ({
 
     setLoading(false);
   };
-  //TODO: fix call api call twice
   useEffect(() => {
     const controller = new AbortController();
     fetchData(controller);
     return () => {
       controller.abort();
     };
-  }, [keyword, type, id]);
+  }, [query, JSON.stringify(variable)]);
   return { data, loading, err };
 };

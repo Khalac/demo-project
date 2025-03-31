@@ -1,11 +1,10 @@
 import { useState } from "react";
-import Pagination from "../ui/Pagination/Pagination";
-import SearchResult from "@/components/ui/SearchResult/SearchResult";
+import { Filter, Pagination, SearchResult } from "../ui";
 import useFilter from "@/hooks/useFilter";
 import useDebounce from "@/hooks/useDebounce";
-import Filter from "../ui/Filter/Filter";
 import { useSelector } from "react-redux";
 import "./LikedCardsList.scss";
+
 const LikedCardsList = () => {
   const { user } = useSelector((state: any) => state.user);
   const [input, setInput] = useState("");
@@ -34,7 +33,7 @@ const LikedCardsList = () => {
         dataFilter={dataFilter}
         isLikedCardPage={true}
       />
-      {dataFilter.length > 0 && (
+      {dataFilter && dataFilter.length > 0 && (
         <Pagination
           data={user.likedCards}
           itemPerPage={ITEMPERPAGE}
